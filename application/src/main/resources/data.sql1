@@ -1,0 +1,23 @@
+--Cousine
+INSERT INTO cousine (name) VALUES ('Chinese');
+INSERT INTO cousine (name) VALUES ('Pizza');
+INSERT INTO cousine (name) VALUES ('Sushi');
+INSERT INTO cousine (name) VALUES ('Vietnamese');
+--Store
+SET @COUSINE_ID = SELECT id FROM cousine WHERE name = 'Chinese';
+
+INSERT INTO store (name, address, cousine_id)
+VALUES ('Hai Shang', '2991 Pembina Hwy, Winnipeg, Manitoba R3T 2H5, Canada', @COUSINE_ID);
+
+SET @COUSINE_ID = SELECT id FROM cousine WHERE name = 'Pizza';
+
+INSERT INTO store (name, address, cousine_id)
+VALUES ('Za Pizza Bistro', 'E-1220 St Mary s Rd, Winnipeg, Manitoba R2M 3V6, Canada', @COUSINE_ID);
+--Product
+SET @STORE_ID = SELECT id FROM store WHERE name = 'Hai Shang';
+
+INSERT INTO product (name, description, price, store_id)
+VALUES ('Shrimp Tempura', 'Fresh shrimp battered and deep fried until golden brown', 10.95, @STORE_ID);
+--Customer
+--Order
+--Order-item
