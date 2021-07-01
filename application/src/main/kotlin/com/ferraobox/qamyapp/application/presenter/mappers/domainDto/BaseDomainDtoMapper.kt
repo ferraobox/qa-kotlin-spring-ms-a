@@ -1,5 +1,6 @@
 package com.ferraobox.qamyapp.application.presenter.mappers.domainDto
 
+import com.ferraobox.qamyapp.application.core.domain.BaseDomainEntity
 
 /**
  * Convert from Domain(F) to Dto(T)
@@ -17,7 +18,7 @@ interface BaseDomainDtoMapper<F, T> {
      * @param eList the list
      * @return Transformed list.
      */
-    fun mapToDto(eList: List<F>?): List<T>?
+    fun mapToDto(eList: List<F>, list: Boolean): List<T>
 
     /**
      * Maps from Db object to Domain object.
@@ -31,5 +32,5 @@ interface BaseDomainDtoMapper<F, T> {
      * @param eList the list
      * @return Transformed list.
      */
-    fun mapToDomain(eList: List<T>?): List<F>?
+    fun mapToDomain(eList: List<T>, list: Boolean): List<F>
 }

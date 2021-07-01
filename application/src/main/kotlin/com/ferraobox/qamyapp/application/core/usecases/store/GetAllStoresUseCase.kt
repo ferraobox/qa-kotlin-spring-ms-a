@@ -17,6 +17,6 @@ class GetAllStoresUseCase(private val repository: IStoreRepository) :
     class InputValues : UseCase.InputValues
 
     data class OutputValues (
-        var stores: List<Store>?
+        var stores: List<Store>
     ): UseCase.OutputValues
 }

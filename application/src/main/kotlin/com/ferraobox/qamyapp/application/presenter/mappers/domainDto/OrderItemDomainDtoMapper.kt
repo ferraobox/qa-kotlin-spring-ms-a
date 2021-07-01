@@ -8,8 +8,9 @@ import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 import org.mapstruct.Mappings
 import org.mapstruct.ReportingPolicy
+import org.springframework.stereotype.Component
 
-
+@Component
 @Mapper(
     unmappedTargetPolicy = ReportingPolicy.IGNORE,
     componentModel = "spring",
@@ -24,7 +25,7 @@ interface OrderItemDomainDtoMapper : BaseDomainDtoMapper<OrderItem?, OrderItemRe
         Mapping(source = "total", target = "total")
     )
     override fun mapToDto(customer: OrderItem?): OrderItemResponse?
-    override fun mapToDto(customer: List<OrderItem?>?): List<OrderItemResponse?>?
+    override fun mapToDto(customer: List<OrderItem?>, list: Boolean): List<OrderItemResponse?>
     override fun mapToDomain(customer: OrderItemResponse?): OrderItem?
-    override fun mapToDomain(customer: List<OrderItemResponse?>?): List<OrderItem?>?
+    override fun mapToDomain(customer: List<OrderItemResponse?>, list: Boolean): List<OrderItem?>
 }

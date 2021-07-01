@@ -30,14 +30,14 @@ class StoreController(
         return useCaseExecutor.execute(
             getAllStoresUseCase,
             GetAllStoresUseCase.InputValues()
-        ) { outputValues -> storeDomainDtoMapper.mapToDto(outputValues.stores) }
+        ) { outputValues -> storeDomainDtoMapper.mapToDto(outputValues.stores, list = true) }
     }
 
-    override fun getAllStoresByNameMatching(@PathVariable text: String?): CompletableFuture<List<StoreResponse?>?>? {
+    override fun getAllStoresByNameMatching(@PathVariable text: String): CompletableFuture<List<StoreResponse?>?> {
         return useCaseExecutor.execute(
             searchStoresByNameUseCase,
             SearchStoresByNameUseCase.InputValues(searchText=text)
-        ) { outputValues -> storeDomainDtoMapper.mapToDto(outputValues.stores) }
+        ) { outputValues -> storeDomainDtoMapper.mapToDto(outputValues.stores, list = true) }
     }
 
     override fun getStoreByIdentity(@PathVariable id: Long): CompletableFuture<StoreResponse?> {
@@ -51,6 +51,6 @@ class StoreController(
         return useCaseExecutor.execute(
             getProductsByStoreUseCase,
             GetProductsByStoreUseCase.InputValues(id=Identity(id))
-        ) { outputValues -> productDomainDtoMapper.mapToDto(outputValues.products) }
+        ) { outputValues -> productDomainDtoMapper.mapToDto(outputValues.products, list = true) }
     }
 }

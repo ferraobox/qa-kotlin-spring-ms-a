@@ -28,20 +28,20 @@ class CousineController(
         return useCaseExecutor.execute(
             getStoresByCousineUseCase,
             GetStoresByCousineUseCase.InputValues(id=Identity(id))
-        ) { (outputValues) -> storeDomainDtoMapper.mapToDto(outputValues) }
+        ) { (outputValues) -> storeDomainDtoMapper.mapToDto(outputValues, list = true) }
     }
 
    override fun allCousines(): CompletableFuture<List<Any?>?> {
         return useCaseExecutor.execute(
             getAllCousinesUseCase,
             GetAllCousinesUseCase.InputValues()
-        ) { outputValues -> cousineDomainDtoMapper.mapToDto(outputValues.cousines) }
+        ) { outputValues -> cousineDomainDtoMapper.mapToDto(outputValues.cousines, list = true) }
    }
 
-    override fun getAllCousinesByNameMatching(@PathVariable text: String?): CompletableFuture<List<CousineResponse?>?>? {
+    override fun getAllCousinesByNameMatching(@PathVariable text: String): CompletableFuture<List<CousineResponse?>?> {
         return useCaseExecutor.execute(
             searchCousineByNameUseCase,
-            SearchCousineByNameUseCase.InputValues(searchText=text!!)
-        ) { outputValues -> cousineDomainDtoMapper.mapToDto(outputValues.cousines) }
+            SearchCousineByNameUseCase.InputValues(searchText=text)
+        ) { outputValues -> cousineDomainDtoMapper.mapToDto(outputValues.cousines, list = true) }
     }
 }

@@ -7,8 +7,9 @@ import org.mapstruct.Mapping
 import org.mapstruct.Mappings
 import org.mapstruct.ReportingPolicy
 import org.springframework.http.ResponseEntity
+import org.springframework.stereotype.Component
 
-
+@Component
 @Mapper(
     unmappedTargetPolicy = ReportingPolicy.IGNORE,
     componentModel = "spring",

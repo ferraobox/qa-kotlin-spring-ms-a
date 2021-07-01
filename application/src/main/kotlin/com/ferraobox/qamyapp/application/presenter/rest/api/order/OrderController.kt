@@ -6,7 +6,6 @@ import com.ferraobox.qamyapp.application.core.usecases.order.*
 import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.CustomerDomainDtoMapper
 import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.OrderDomainDtoMapper
 import com.ferraobox.qamyapp.application.presenter.mappers.inputOutputDto.CreateOrderInputMapper
-import com.ferraobox.qamyapp.application.presenter.mappers.inputOutputDto.CreateOrderOutputMapper
 import com.ferraobox.qamyapp.application.presenter.usecases.security.CurrentUser
 import com.ferraobox.qamyapp.application.presenter.usecases.security.UserPrincipal
 import com.ferraobox.qamyapp.dto.ApiResponse
@@ -38,13 +37,13 @@ class OrderController(
 ) : OrderResource {
 
     override fun create(
-        @CurrentUser userDetails: UserPrincipal?,
+        @CurrentUser userPrincipal: UserPrincipal?,
         httpServletRequest: HttpServletRequest?,
         @RequestBody orderRequest: @Valid OrderRequest?
     ): CompletableFuture<ResponseEntity<OrderResponse?>?> {
         return useCaseExecutor.execute(
             createOrderUseCase,
-            createOrderInputMapper.map(orderRequest, userDetails)
+            createOrderInputMapper.map(orderRequest, userPrincipal)
         ) { outputValues ->
             val location = ServletUriComponentsBuilder
                 .fromContextPath(httpServletRequest!!)

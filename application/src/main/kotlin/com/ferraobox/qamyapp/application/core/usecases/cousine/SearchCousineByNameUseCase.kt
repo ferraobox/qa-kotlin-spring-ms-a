@@ -20,6 +20,6 @@ open class SearchCousineByNameUseCase(private val repository: ICousineRepository
 
 
     data class OutputValues(
-        var cousines: List<Cousine>?
+        var cousines: List<Cousine>
     ) : UseCase.OutputValues
 }

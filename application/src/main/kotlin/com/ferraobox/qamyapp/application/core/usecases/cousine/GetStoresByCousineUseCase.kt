@@ -13,7 +13,7 @@ open class GetStoresByCousineUseCase(private val repository: IStoreRepository) :
     UseCase<GetStoresByCousineUseCase.InputValues, GetStoresByCousineUseCase.OutputValues> {
 
     override fun execute(input: InputValues): OutputValues {
-        val id: Identity = input!!.id
+        val id: Identity = input.id
         val stores: List<Store>? = repository.getStoresById(id)
         if (stores!!.isEmpty()) {
             throw NotFoundException("Cousine %s not found", id.number)
@@ -26,6 +26,6 @@ open class GetStoresByCousineUseCase(private val repository: IStoreRepository) :
     ) : UseCase.InputValues
 
     data class OutputValues(
-        var stores: List<Store>?
+        var stores: List<Store>
     ) : UseCase.OutputValues
 }

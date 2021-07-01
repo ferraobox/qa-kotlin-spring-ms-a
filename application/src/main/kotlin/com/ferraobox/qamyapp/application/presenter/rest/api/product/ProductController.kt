@@ -25,7 +25,7 @@ class ProductController(
         return useCaseExecutor.execute(
             getAllProductsUseCase,
             GetAllProductsUseCase.InputValues()
-        ) { outputValues -> productDomainDtoMapper.mapToDto(outputValues.products) }
+        ) { outputValues -> productDomainDtoMapper.mapToDto(outputValues.products, list = true) }
     }
 
     override fun getByIdentity(@PathVariable id: Long): CompletableFuture<ProductResponse?> {
@@ -39,6 +39,6 @@ class ProductController(
         return useCaseExecutor.execute(
             searchProductsByNameOrDescriptionUseCase,
             SearchProductsByNameOrDescriptionUseCase.InputValues(searchText=text)
-        ) { outputValues -> productDomainDtoMapper.mapToDto(outputValues.products) }
+        ) { outputValues -> productDomainDtoMapper.mapToDto(outputValues.products, list = true) }
     }
 }

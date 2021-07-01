@@ -25,17 +25,17 @@ interface OrderDomainDtoMapper : BaseDomainDtoMapper<Order?, OrderResponse?> {
         Mapping(source = "updatedAt", target = "lastUpdate"),
         Mapping(source = "total", target = "total"),
         Mapping(source = "status", target = "status"),
-        Mapping(source = "customer.name", target = "contact"),
+        Mapping(expression = "java(order.getCustomer().getName())", target = "contact"),
         Mapping(source = "orderItems", target = "orderItems"),
         Mapping(source = "customer", target = "customer"),
         Mapping(source = "store", target = "store")
     )
     override fun mapToDto(order: Order?): OrderResponse?
-    override fun mapToDto(order: List<Order?>?): List<OrderResponse?>?
+    override fun mapToDto(order: List<Order?>, list: Boolean): List<OrderResponse?>
 
     @Mappings(
         Mapping(expression = "java(new Identity(order.getId()))", target = "id")
     )
     override fun mapToDomain(order: OrderResponse?): Order?
-    override fun mapToDomain(order: List<OrderResponse?>?): List<Order?>?
+    override fun mapToDomain(order: List<OrderResponse?>, list: Boolean): List<Order?>
 }

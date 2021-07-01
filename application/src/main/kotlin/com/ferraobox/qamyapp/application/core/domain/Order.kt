@@ -3,8 +3,8 @@ package com.ferraobox.qamyapp.application.core.domain
 import java.time.Instant
 
 data class Order(
-    private val status: Status?,
     override var id: Identity,
+    var status: Status?,
     var customer: Customer?,
     var store: Store?,
     var orderItems: List<OrderItem>?,

@@ -3,12 +3,13 @@ package com.ferraobox.qamyapp.dto;
 import java.time.Instant
 
 data class OrderResponse (
-    private val id: Long?,
-    private val date: Instant?,
-    private val store: StoreResponse?,
-    private val contact: String?,
-    private val total: Double?,
-    private val status: Status?,
-    private val lastUpdate: Instant?,
-    private val orderItems: List<OrderItemResponse>?
+    var id: Long?,
+    var date: Instant?,
+    var customer: CustomerResponse?,
+    var store: StoreResponse?,
+    var contact: String?,
+    var total: Double?,
+    var status: Status?,
+    var lastUpdate: Instant?,
+    var orderItems: List<OrderItemResponse>?
 )

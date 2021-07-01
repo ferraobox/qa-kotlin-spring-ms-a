@@ -14,10 +14,10 @@ class GetProductsByStoreAndProductsIdUseCase(private val repository: IProductRep
     UseCase<GetProductsByStoreAndProductsIdUseCase.InputValues, GetProductsByStoreAndProductsIdUseCase.OutputValues> {
 
     override fun execute(input: InputValues): OutputValues {
-        val distinctProductsId: List<Identity>? = input.productsId
-        val foundProducts: List<Product>? =
+        val distinctProductsId: List<Identity> = input.productsId
+        val foundProducts: List<Product> =
             repository.searchProductsByStoreAndProductsId(input.storeId, distinctProductsId)
-        if (foundProducts != null && distinctProductsId != null) {
+        if (distinctProductsId != null) {
             throwIfAnyProductIsNotFound(distinctProductsId, foundProducts)
         }
         return OutputValues(foundProducts)
@@ -61,11 +61,11 @@ class GetProductsByStoreAndProductsIdUseCase(private val repository: IProductRep
     }
 
     data class InputValues(
-        var storeId: Identity?,
-        var productsId: List<Identity>?
+        var storeId: Identity,
+        var productsId: List<Identity>
     ) : UseCase.InputValues
 
     data class OutputValues(
-        var products: List<Product>?
+        var products: List<Product>
     ) : UseCase.OutputValues
 }

@@ -17,6 +17,6 @@ open class GetAllCousinesUseCase(private val repository: ICousineRepository) :
     class InputValues() : UseCase.InputValues
 
     data class OutputValues(
-        var cousines: List<Cousine>?
+        var cousines: List<Cousine>
     ) : UseCase.OutputValues
 }

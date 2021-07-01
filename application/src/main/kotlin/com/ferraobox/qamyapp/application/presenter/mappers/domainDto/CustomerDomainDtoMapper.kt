@@ -25,7 +25,7 @@ interface CustomerDomainDtoMapper : BaseDomainDtoMapper<Customer?, CustomerRespo
         Mapping(source = "address", target = "address")
     )
     override fun mapToDto(customer: Customer?): CustomerResponse?
-    override fun mapToDto(customer: List<Customer?>?): List<CustomerResponse?>?
+    override fun mapToDto(customer: List<Customer?>, list: Boolean): List<CustomerResponse?>
 
     @Mappings(
         Mapping(expression = "java(new Identity(customer.getId()))", target = "id"),
@@ -33,5 +33,5 @@ interface CustomerDomainDtoMapper : BaseDomainDtoMapper<Customer?, CustomerRespo
         Mapping(source = "email", target = "email")
     )
     override fun mapToDomain(customer: CustomerResponse?): Customer?
-    override fun mapToDomain(customer: List<CustomerResponse?>?): List<Customer?>?
+    override fun mapToDomain(customer: List<CustomerResponse?>, list: Boolean): List<Customer?>
 }

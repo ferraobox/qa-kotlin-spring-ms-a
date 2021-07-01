@@ -7,12 +7,11 @@ import com.ferraobox.qamyapp.application.database.entities.IdConverter
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 import org.mapstruct.Mappings
-import org.springframework.stereotype.Component
+import org.mapstruct.ReportingPolicy
 import java.util.*
 
-@Component
 @Mapper(
-    unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE,
+    unmappedTargetPolicy = ReportingPolicy.IGNORE,
     componentModel = "spring",
     imports = [Arrays::class, IdConverter::class, Identity::class],
     uses = []
@@ -20,14 +19,14 @@ import java.util.*
 interface CousineDomainDbMapper : BaseDomainDbMapper<Cousine?, CousineDb?> {
 
     @Mappings(
-        Mapping(expression = "java(IdConverter.convertId(cousine.id))", target = "id"),
+        Mapping(expression = "java(IdConverter.INSTANCE.convertId(cousine.getId()))", target = "id"),
         Mapping(source = "name", target = "name")
     )
     override fun mapToDb(cousine: Cousine?): CousineDb?
     override fun mapToDb(cousine: List<Cousine?>?): List<CousineDb?>?
 
     @Mappings(
-        Mapping(expression = "java(new Identity(cousine.id))", target = "id"),
+        Mapping(expression = "java(new Identity(cousine.getId()))", target = "id"),
         Mapping(source = "name", target = "name")
     )
     override fun mapToDomain(cousine: CousineDb?): Cousine?

@@ -16,7 +16,7 @@ class GetAllProductsUseCase(private val repository: IProductRepository) :
     class InputValues : UseCase.InputValues
 
     data class OutputValues(
-        var products: List<Product>?
+        var products: List<Product>
     ) : UseCase.OutputValues
 
 }

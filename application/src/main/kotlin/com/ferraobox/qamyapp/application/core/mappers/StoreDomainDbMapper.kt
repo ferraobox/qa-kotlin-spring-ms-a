@@ -11,7 +11,6 @@ import org.mapstruct.ReportingPolicy
 import org.springframework.stereotype.Component
 import java.util.*
 
-@Component
 @Mapper(
     unmappedTargetPolicy = ReportingPolicy.IGNORE,
     componentModel = "spring",
@@ -20,7 +19,7 @@ import java.util.*
 )
 interface StoreDomainDbMapper : BaseDomainDbMapper<Store?, StoreDb?> {
     @Mappings(
-    Mapping(expression = "java(IdConverter.convertId(store.getId()))", target = "id"),
+    Mapping(expression = "java(IdConverter.INSTANCE.convertId(store.getId()))", target = "id"),
     Mapping(source = "name", target = "name"),
     Mapping(source = "address", target = "address"),
     Mapping(source = "cousine", target = "cousine"),

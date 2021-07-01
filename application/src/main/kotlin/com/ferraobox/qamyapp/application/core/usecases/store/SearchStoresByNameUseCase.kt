@@ -15,10 +15,10 @@ class SearchStoresByNameUseCase(private val repository: IStoreRepository) :
     }
 
     data class InputValues(
-        var searchText: String?
+        var searchText: String
     ): UseCase.InputValues
 
     data class OutputValues (
-        var stores: List<Store>?
+        var stores: List<Store>
     ): UseCase.OutputValues
 }

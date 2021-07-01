@@ -17,7 +17,7 @@ open class CreateCustomerUseCase(
         if (repository.existsByEmail(input.email)) {
             throw EmailAlreadyUsedException("Email address already in use!")
         }
-        val customer: Customer = Customer(
+        val customer = Customer(
             id= Identity(),
             name=input.name,
             email=input.email,
@@ -37,6 +37,6 @@ open class CreateCustomerUseCase(
 
 
     data class OutputValues (
-        var customer: Customer?
+        var customer: Customer
     ): UseCase.OutputValues
 }

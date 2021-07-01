@@ -20,13 +20,12 @@ import org.springframework.stereotype.Component
 interface StoreDomainDtoMapper : BaseDomainDtoMapper<Store?, StoreResponse?> {
 
     @Mappings(
-        Mapping(expression = "java(IdConverter.convertId(store.getId()))", target = "id"),
+        Mapping(expression = "java(IdConverter.INSTANCE.convertId(store.getId()))", target = "id"),
         Mapping(source = "name", target = "name"),
-        Mapping(source = "address", target = "address"),
-        Mapping(expression = "java(IdConverter.convertId(store.getCousine().getId()))", target = "cousineId")
+        Mapping(source = "address", target = "address")
     )
     override fun mapToDto(store: Store?): StoreResponse?
-    override fun mapToDto(store: List<Store?>?): List<StoreResponse?>?
+    override fun mapToDto(store: List<Store?>, list: Boolean): List<StoreResponse?>
 
     @Mappings(
         Mapping(expression = "java(new Identity(store.getId()))", target = "id"),
@@ -34,5 +33,5 @@ interface StoreDomainDtoMapper : BaseDomainDtoMapper<Store?, StoreResponse?> {
         Mapping(source = "address", target = "address")
     )
     override fun mapToDomain(store: StoreResponse?): Store?
-    override fun mapToDomain(store: List<StoreResponse?>?): List<Store?>?
+    override fun mapToDomain(store: List<StoreResponse?>, list: Boolean): List<Store?>
 }

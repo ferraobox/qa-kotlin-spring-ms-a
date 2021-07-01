@@ -10,7 +10,6 @@ import org.mapstruct.Mappings
 import org.mapstruct.ReportingPolicy
 import java.util.*
 
-
 @Mapper(
     unmappedTargetPolicy = ReportingPolicy.IGNORE,
     componentModel = "spring",
@@ -20,7 +19,7 @@ import java.util.*
 interface OrderItemDomainDbMapper : BaseDomainDbMapper<OrderItem?, OrderItemDb?> {
 
     @Mappings(
-        Mapping(expression = "java(IdConverter.convertId(orderItem.getId()))", target = "id"),
+        Mapping(expression = "java(IdConverter.INSTANCE.convertId(orderItem.getId()))", target = "id"),
         Mapping(source = "quantity", target = "quantity"),
         Mapping(source = "product", target = "product"),
         Mapping(source = "product.price", target = "price"),

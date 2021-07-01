@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.ir.backend.js.compile
 
 plugins {
 	id("org.springframework.boot") version "2.5.1"
@@ -28,6 +27,7 @@ subprojects{
 	apply(plugin="io.spring.dependency-management")
 	apply(plugin="kotlin")
 	apply(plugin="groovy")
+	apply(plugin = "org.jetbrains.kotlin.kapt")
 
 	repositories {
 		mavenCentral()

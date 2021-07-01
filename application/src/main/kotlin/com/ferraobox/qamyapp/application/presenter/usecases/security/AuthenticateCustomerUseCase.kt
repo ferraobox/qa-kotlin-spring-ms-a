@@ -21,6 +21,6 @@ class AuthenticateCustomerUseCase(
     ) : UseCase.InputValues
 
     data class OutputValues(
-        private val jwtToken: String
+        var jwtToken: String
     ) : UseCase.OutputValues
 }

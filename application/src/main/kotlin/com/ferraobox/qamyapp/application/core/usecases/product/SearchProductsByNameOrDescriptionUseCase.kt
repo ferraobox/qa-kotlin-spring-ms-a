@@ -14,10 +14,10 @@ class SearchProductsByNameOrDescriptionUseCase(private val repository: IProductR
     }
 
     class InputValues(
-        var searchText: String?
+        var searchText: String
     ) : UseCase.InputValues
 
     data class OutputValues(
-        var products: List<Product>?
+        var products: List<Product>
     ) : UseCase.OutputValues
 }

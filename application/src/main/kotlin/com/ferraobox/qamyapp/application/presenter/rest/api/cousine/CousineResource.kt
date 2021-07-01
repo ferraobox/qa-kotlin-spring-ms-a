@@ -13,11 +13,11 @@ import java.util.concurrent.CompletableFuture
 @RequestMapping("/Cousine")
 interface CousineResource {
     @GetMapping("/{id}/stores")
-    fun getStoresByCousineId(@PathVariable id: Long): CompletableFuture<List<StoreResponse?>?>?
+    fun getStoresByCousineId(@PathVariable id: Long): CompletableFuture<List<StoreResponse?>?>
 
     @GetMapping
-    fun allCousines(): CompletableFuture<List<Any?>?>?
+    fun allCousines(): CompletableFuture<List<Any?>?>
 
     @GetMapping("/search/{text}")
-    fun getAllCousinesByNameMatching(@PathVariable text: String?): CompletableFuture<List<CousineResponse?>?>?
+    fun getAllCousinesByNameMatching(@PathVariable text: String): CompletableFuture<List<CousineResponse?>?>
 }

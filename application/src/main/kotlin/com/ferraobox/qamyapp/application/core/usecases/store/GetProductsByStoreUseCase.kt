@@ -14,8 +14,8 @@ class GetProductsByStoreUseCase(private val repository: IStoreRepository) :
 
     override fun execute(inputValues: InputValues): OutputValues {
         val id: Identity = inputValues.id
-        val products: List<Product>? = repository.getProductsById(id)
-        if (products!!.isEmpty()) {
+        val products: List<Product> = repository.getProductsById(id)
+        if (products.isEmpty()) {
             throw NotFoundException("No store found by identity: " + id.number)
         }
         return OutputValues(products)
@@ -26,6 +26,6 @@ class GetProductsByStoreUseCase(private val repository: IStoreRepository) :
     ): UseCase.InputValues
 
     data class OutputValues (
-        var products: List<Product>?
+        var products: List<Product>
     ): UseCase.OutputValues
 }

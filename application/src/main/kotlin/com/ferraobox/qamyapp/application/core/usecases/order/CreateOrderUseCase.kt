@@ -21,7 +21,7 @@ open class CreateOrderUseCase(
 
     private fun createOrder(input: InputValues): Order {
         val orderItems: List<OrderItem> = createOrderItems(input)
-        val order: Order = Order(
+        val order = Order(
             id = Identity(),
             customer = input.customer,
             store = getFirstProductStore(orderItems),
@@ -42,7 +42,7 @@ open class CreateOrderUseCase(
 
     private fun createOrderItems(input: InputValues): List<OrderItem> {
         val productMap: Map<Identity, Product> = getProducts(input)
-        return input.orderItems!!.map { inputItem -> createOrderItem(inputItem, productMap) }.toList()
+        return input.orderItems.map { inputItem -> createOrderItem(inputItem, productMap) }.toList()
     }
 
     private fun createOrderItem(inputItem: InputItem, productMap: Map<Identity, Product>): OrderItem {
@@ -72,7 +72,7 @@ open class CreateOrderUseCase(
 
     data class InputValues(
         var customer: Customer?,
-        var storeId: Identity?,
+        var storeId: Identity,
         var orderItems: List<InputItem>
     ) : UseCase.InputValues
 
@@ -83,7 +83,7 @@ open class CreateOrderUseCase(
 
 
     data class InputItem(
-        var id: Identity?,
+        var id: Identity,
         var quantity: Int = 0
     )
 }
