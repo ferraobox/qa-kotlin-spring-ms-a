@@ -13,7 +13,7 @@ class GetProductUseCase(private val repository: IProductRepository) :
     UseCase<GetProductUseCase.InputValues, GetProductUseCase.OutputValues> {
 
     override fun execute(input: InputValues): OutputValues {
-        val id: Identity = input!!.id
+        val id: Identity = input.id
         return repository.getById(id)
             .map { product -> OutputValues(product)}
             .orElseThrow { NotFoundException("Product %s not found", id.number) }

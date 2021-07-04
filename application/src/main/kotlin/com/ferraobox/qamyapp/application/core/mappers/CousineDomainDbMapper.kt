@@ -3,32 +3,31 @@ package com.ferraobox.qamyapp.application.core.mappers
 import com.ferraobox.qamyapp.application.core.domain.Cousine
 import com.ferraobox.qamyapp.application.core.domain.Identity
 import com.ferraobox.qamyapp.application.database.entities.CousineDb
-import com.ferraobox.qamyapp.application.database.entities.IdConverter
-import org.mapstruct.Mapper
-import org.mapstruct.Mapping
-import org.mapstruct.Mappings
-import org.mapstruct.ReportingPolicy
 import java.util.*
 
-@Mapper(
-    unmappedTargetPolicy = ReportingPolicy.IGNORE,
-    componentModel = "spring",
-    imports = [Arrays::class, IdConverter::class, Identity::class],
-    uses = []
-)
-interface CousineDomainDbMapper : BaseDomainDbMapper<Cousine?, CousineDb?> {
+object CousineDomainDbMapper {
 
-    @Mappings(
-        Mapping(expression = "java(IdConverter.INSTANCE.convertId(cousine.getId()))", target = "id"),
-        Mapping(source = "name", target = "name")
-    )
-    override fun mapToDb(cousine: Cousine?): CousineDb?
-    override fun mapToDb(cousine: List<Cousine?>?): List<CousineDb?>?
+    fun Cousine.mapToDb(): CousineDb {
+        return CousineDb(id = this.id.number, name = this.name)
+    }
 
-    @Mappings(
-        Mapping(expression = "java(new Identity(cousine.getId()))", target = "id"),
-        Mapping(source = "name", target = "name")
-    )
-    override fun mapToDomain(cousine: CousineDb?): Cousine?
-    override fun mapToDomain(cousine: List<CousineDb?>?): List<Cousine?>?
+    fun List<Cousine>.mapToDb(): List<CousineDb> {
+        val cousineDbList = ArrayList<CousineDb>()
+        forEach { cousine ->
+            cousineDbList.add(cousine.mapToDb())
+        }
+        return cousineDbList
+    }
+
+    fun CousineDb.mapToDomain(): Cousine {
+        return Cousine(id = Identity(this.id!!), name = this.name)
+    }
+
+    fun List<CousineDb>.mapToDomain(): List<Cousine> {
+        val cousineList = ArrayList<Cousine>()
+        forEach { cousineDB ->
+            cousineList.add(cousineDB.mapToDomain())
+        }
+        return cousineList
+    }
 }

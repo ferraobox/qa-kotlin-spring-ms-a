@@ -2,7 +2,7 @@ package com.ferraobox.qamyapp.application.database.repositories.impl
 
 import com.ferraobox.qamyapp.application.core.domain.Identity
 import com.ferraobox.qamyapp.application.core.domain.Product
-import com.ferraobox.qamyapp.application.core.mappers.ProductDomainDbMapper
+import com.ferraobox.qamyapp.application.core.mappers.ProductDomainDbMapper.mapToDomain
 import com.ferraobox.qamyapp.application.core.repositories.IProductRepository
 import com.ferraobox.qamyapp.application.database.repositories.DbProductRepository
 import org.springframework.stereotype.Repository
@@ -13,34 +13,33 @@ import kotlin.streams.toList
 @Repository
 class ProductRepositoryImpl(
     private val repository: DbProductRepository,
-    private val productDomainDbMapper: ProductDomainDbMapper
 ) : IProductRepository {
 
-    override fun all(): List<Product>? {
+    override fun all(): List<Product> {
         return repository
             .findAll()
             .stream()
-            .map { p -> productDomainDbMapper.mapToDomain(p) }
+            .map { p -> p?.mapToDomain() }
             .collect(Collectors.toList<Product>())
     }
 
-    override fun getById(id: Identity?): Optional<Product> {
+    override fun getById(id: Identity): Optional<Product> {
         return repository
-            .findById(id!!.number)
-            .map { p -> productDomainDbMapper.mapToDomain(p) }
+            .findById(id.number)
+            .map { p -> p?.mapToDomain() }
     }
 
-    override fun searchByNameOrDescription(searchText: String?): List<Product> {
+    override fun searchByNameOrDescription(searchText: String): List<Product> {
         val products = repository.findByNameContainingOrDescriptionContainingAllIgnoreCase(searchText, searchText)
-        return products!!.stream()
-            .map { p -> productDomainDbMapper.mapToDomain(p) }
+        return products.stream()
+            .map { p -> p?.mapToDomain() }
             .collect(Collectors.toList<Product>())
     }
 
-    override fun searchProductsByStoreAndProductsId(storeId: Identity?, productsId: List<Identity>?): List<Product> {
-        val products = repository.findByStoreIdAndIdIsIn(storeId!!.number, createListOfLong(productsId!!))
-        return products!!.stream()
-            .map { p -> productDomainDbMapper.mapToDomain(p) }
+    override fun searchProductsByStoreAndProductsId(storeId: Identity, productsId: List<Identity>): List<Product> {
+        val products = repository.findByStoreIdAndIdIsIn(storeId.number, createListOfLong(productsId))
+        return products.stream()
+            .map { p -> p?.mapToDomain() }
             .collect(Collectors.toList<Product>())
     }
 

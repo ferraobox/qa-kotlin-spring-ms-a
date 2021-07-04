@@ -11,7 +11,7 @@ class PublisherService (
     private val streamBridge: StreamBridge
 ){
     companion object {
-        private val log = LoggerFactory.getLogger(this.javaClass)
+        private val log = LoggerFactory.getLogger(this::class.java)
     }
     fun send(event: Serializable, binding: String?) {
         log.debug("sending {}", event)

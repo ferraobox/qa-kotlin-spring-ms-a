@@ -10,7 +10,7 @@ abstract class UpdateOrderUseCase(protected val repository: IOrderRepository) :
     UseCase<UpdateOrderUseCase.InputValues, UpdateOrderUseCase.OutputValues> {
 
     override fun execute(input: InputValues): OutputValues {
-        val id: Identity? = input.id
+        val id: Identity = input.id
         return repository.getById(id).map { order -> updateStatus(order) }
             .map { order -> order?.let { persistAndReturn(it) } }
             .orElseThrow { NotFoundException("Order %s not found", id) }
@@ -23,7 +23,7 @@ abstract class UpdateOrderUseCase(protected val repository: IOrderRepository) :
     }
 
     data class InputValues(
-        var id: Identity?
+        var id: Identity
     ) : UseCase.InputValues
 
     data class OutputValues(

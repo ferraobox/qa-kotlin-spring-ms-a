@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component
 class GetProductsByStoreUseCase(private val repository: IStoreRepository) :
     UseCase<GetProductsByStoreUseCase.InputValues, GetProductsByStoreUseCase.OutputValues> {
 
-    override fun execute(inputValues: InputValues): OutputValues {
-        val id: Identity = inputValues.id
+    override fun execute(input: InputValues): OutputValues {
+        val id: Identity = input.id
         val products: List<Product> = repository.getProductsById(id)
         if (products.isEmpty()) {
             throw NotFoundException("No store found by identity: " + id.number)

@@ -2,40 +2,43 @@ package com.ferraobox.qamyapp.application.core.mappers
 
 import com.ferraobox.qamyapp.application.core.domain.Identity
 import com.ferraobox.qamyapp.application.core.domain.Product
-import com.ferraobox.qamyapp.application.database.entities.IdConverter
+import com.ferraobox.qamyapp.application.core.mappers.StoreDomainDbMapper.mapToDb
+import com.ferraobox.qamyapp.application.core.mappers.StoreDomainDbMapper.mapToDomain
 import com.ferraobox.qamyapp.application.database.entities.ProductDb
-import org.mapstruct.Mapper
-import org.mapstruct.Mapping
-import org.mapstruct.Mappings
-import org.mapstruct.ReportingPolicy
-import org.springframework.stereotype.Component
 import java.util.*
+import kotlin.collections.ArrayList
 
-@Mapper(
-    unmappedTargetPolicy = ReportingPolicy.IGNORE,
-    componentModel = "spring",
-    imports = [Arrays::class, HashSet::class, IdConverter::class, Identity::class],
-    uses = [StoreDomainDbMapper::class]
-)
-interface ProductDomainDbMapper : BaseDomainDbMapper<Product?, ProductDb?> {
+object ProductDomainDbMapper {
 
-    @Mappings(
-        Mapping(expression = "java(IdConverter.INSTANCE.convertId(product.getId()))", target = "id"),
-        Mapping(source = "name", target = "name"),
-        Mapping(source = "description", target = "description"),
-        Mapping(source = "price", target = "price"),
-        Mapping(source = "store", target = "store")
-    )
-    override fun mapToDb(product: Product?): ProductDb?
-    override fun mapToDb(product: List<Product?>?): List<ProductDb?>?
+    fun Product.mapToDb(): ProductDb {
+        return ProductDb(
+            id = this.id.number,
+            name = this.name,
+            description = this.description,
+            price = this.price,
+            store = this.store.mapToDb()
+        )
+    }
 
-    @Mappings(
-        Mapping(expression = "java(new Identity(product.getId()))", target = "id"),
-        Mapping(source = "name", target = "name"),
-        Mapping(source = "description", target = "description"),
-        Mapping(source = "price", target = "price"),
-        Mapping(source = "store", target = "store"),
-    )
-    override fun mapToDomain(product: ProductDb?): Product?
-    override fun mapToDomain(product: List<ProductDb?>?): List<Product?>?
+    fun List<Product>.mapToDb(): MutableSet<ProductDb> {
+        val productListDb: MutableSet<ProductDb> = HashSet()
+        forEach { product -> productListDb.add(product.mapToDb()) }
+        return productListDb
+    }
+
+    fun ProductDb.mapToDomain(): Product {
+        return Product(
+            id = Identity(this.id!!),
+            name = this.name,
+            description = this.description,
+            price = this.price,
+            store = this.store.mapToDomain()
+        )
+    }
+
+    fun MutableSet<ProductDb>.mapToDomain(): List<Product> {
+        val productList = ArrayList<Product>()
+        forEach { productDb -> productList.add(productDb.mapToDomain()) }
+        return productList
+    }
 }

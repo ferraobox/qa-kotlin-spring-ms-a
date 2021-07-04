@@ -10,34 +10,27 @@ class OrderItemDb(
     override var id: Long?,
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
-    var order: OrderDb?,
-
-    @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    var product: ProductDb?,
+    var product: ProductDb,
 
     @Column(nullable = false)
-    var price: Double?,
+    var price: Double,
 
     @Column(nullable = false)
-    var quantity: Int?,
+    var quantity: Int,
 
     @Column(nullable = false)
-    var total: Double?,
+    var total: Double,
 ): BaseDbEntity() {
-    constructor() : this(null,null,null,null,null,null)
-
     companion object {
         // TODO: test
         fun newInstance(productData: ProductDb, quantity: Int): OrderItemDb {
             return OrderItemDb(
                 id = null,
-                order = null,
                 product = productData,
                 price = productData.price,
                 quantity = quantity,
-                total = (quantity * productData.price!!)
+                total = (quantity * productData.price)
             )
         }
     }

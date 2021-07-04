@@ -4,6 +4,7 @@ import com.ferraobox.qamyapp.application.core.domain.*
 import com.ferraobox.qamyapp.application.core.repositories.IOrderRepository
 import com.ferraobox.qamyapp.application.core.usecases.UseCase
 import com.ferraobox.qamyapp.application.core.usecases.product.GetProductsByStoreAndProductsIdUseCase
+import com.ferraobox.qamyapp.dto.OrderRequestItem
 import org.springframework.stereotype.Component
 import java.time.Instant
 
@@ -29,7 +30,7 @@ open class CreateOrderUseCase(
             status = Status.OPEN,
             createdAt = Instant.now(),
             updatedAt = Instant.now(),
-            total = null
+            total = 0.0
         )
         order.total = order.calculateTotal(orderItems)
         return order
@@ -45,13 +46,15 @@ open class CreateOrderUseCase(
         return input.orderItems.map { inputItem -> createOrderItem(inputItem, productMap) }.toList()
     }
 
-    private fun createOrderItem(inputItem: InputItem, productMap: Map<Identity, Product>): OrderItem {
-        val product: Product = productMap[inputItem.id]!!
+    private fun createOrderItem(inputItem: OrderRequestItem, productMap: Map<Identity, Product>): OrderItem {
+        val productId = Identity(inputItem.id)
+        val product: Product = productMap[productId]!!
         return OrderItem(
             id = Identity(),
             product = product,
             quantity = inputItem.quantity,
-            total = (inputItem.quantity * product.price)
+            total = (inputItem.quantity * product.price),
+            price = product.price
         )
     }
 
@@ -61,19 +64,19 @@ open class CreateOrderUseCase(
                 storeId = input.storeId,
                 productsId = createListOfProductsId(input.orderItems)
             )
-        return getProductsByStoreAndProductsIdUseCase!!.execute(inputValues).products!!.associateBy { it.id }
+        return getProductsByStoreAndProductsIdUseCase.execute(inputValues).products.associateBy { it.id }
 
 
     }
 
-    private fun createListOfProductsId(inputItems: List<InputItem>): List<Identity> {
-        return inputItems.map { it.id!! }.toList<Identity>()
+    private fun createListOfProductsId(inputItems: List<OrderRequestItem>): List<Identity> {
+        return inputItems.map { Identity(it.id) }.toList<Identity>()
     }
 
     data class InputValues(
-        var customer: Customer?,
+        var customer: Customer,
         var storeId: Identity,
-        var orderItems: List<InputItem>
+        var orderItems: List<OrderRequestItem>
     ) : UseCase.InputValues
 
 

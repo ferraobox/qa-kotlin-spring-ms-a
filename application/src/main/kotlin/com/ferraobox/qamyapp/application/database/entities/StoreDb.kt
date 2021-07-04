@@ -11,19 +11,17 @@ class StoreDb(
     override var id: Long?,
 
     @Column(unique = true, nullable = false)
-    var name: String?,
+    var name: String,
 
     @Column(nullable = false)
-    var address: String?,
+    var address: String,
 
     @javax.persistence.ManyToOne
     @JoinColumn(name = "cousine_id", nullable = false)
-    var cousine: CousineDb?,
+    var cousine: CousineDb,
 
     @OneToMany(mappedBy = "store")
     @Default
-    var products: Set<ProductDb> = HashSet()
+    var products: MutableSet<ProductDb> = HashSet()
 ) : BaseDbEntity() {
-    constructor() : this(null, null, null,null,HashSet()) {
-    }
 }

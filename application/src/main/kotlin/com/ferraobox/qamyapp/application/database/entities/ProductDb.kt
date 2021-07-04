@@ -10,18 +10,16 @@ class ProductDb(
     override var id: Long?,
 
     @Column(unique = true, nullable = false)
-    var name: String?,
+    var name: String,
 
     @Column(nullable = false)
-    var description: String?,
+    var description: String,
 
     @Column(nullable = false)
-    var price: Double?,
+    var price: Double,
 
     @ManyToOne
     @JoinColumn(name = "store_id", nullable = false)
-    var store: StoreDb?,
+    var store: StoreDb,
 ) : BaseDbEntity() {
-    constructor() : this(null,null,null,null,null) {
-    }
 }

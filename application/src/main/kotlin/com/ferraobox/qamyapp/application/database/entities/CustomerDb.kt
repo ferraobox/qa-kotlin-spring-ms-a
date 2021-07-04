@@ -10,17 +10,15 @@ class CustomerDb (
     override var id: Long?,
 
     @Column(nullable = false)
-    var name: String?,
+    var name: String,
 
     @Column(unique = true, nullable = false)
-    var email: String?,
+    var email: String,
 
     @Column(nullable = false)
-    var address: String?,
+    var address: String,
 
     @Column(nullable = false)
-    var password: String?,
+    var password: String,
 ): BaseDbEntity(){
-    constructor() : this(null,null,null ,null,null) {
-    }
 }

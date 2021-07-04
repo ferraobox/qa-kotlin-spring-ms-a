@@ -27,7 +27,6 @@ subprojects{
 	apply(plugin="io.spring.dependency-management")
 	apply(plugin="kotlin")
 	apply(plugin="groovy")
-	apply(plugin = "org.jetbrains.kotlin.kapt")
 
 	repositories {
 		mavenCentral()
@@ -40,17 +39,22 @@ subprojects{
 	}
 
 	dependencies {
+		implementation("org.springframework.boot:spring-boot-starter-validation")
 		implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 		implementation("org.jetbrains.kotlin:kotlin-reflect")
 		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 		implementation("org.liquibase:liquibase-core")
 		implementation("org.springframework.kafka:spring-kafka")
+		implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka")
+
+		implementation( "org.springframework.cloud:spring-cloud-starter-config")
+		implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+
 		runtimeOnly("com.h2database:h2")
 		runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 		runtimeOnly("org.postgresql:postgresql")
 		testImplementation("org.springframework.boot:spring-boot-starter-test")
 		testImplementation("org.springframework.kafka:spring-kafka-test")
-		implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka")
 		testImplementation("org.springframework.cloud:spring-cloud-stream-test-support")
 
 	}

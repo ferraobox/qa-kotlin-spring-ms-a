@@ -15,57 +15,52 @@ class OrderDb(
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
-    var customer: CustomerDb?,
+    var customer: CustomerDb,
 
     @ManyToOne
     @JoinColumn(name = "store_id", nullable = false)
-    var store: StoreDb?,
+    var store: StoreDb,
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = [CascadeType.ALL], orphanRemoval = true)
     @Default
-    var orderItems: MutableSet<OrderItemDb>? = HashSet<OrderItemDb>(),
+    var orderItems: MutableSet<OrderItemDb> = HashSet<OrderItemDb>(),
 
     @Column(nullable = false)
-    var total: Double?,
+    var total: Double,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    var status: Status?,
+    var status: Status,
 
     @Column(name = "created_at", nullable = false)
-    var createdAt: Instant?,
+    var createdAt: Instant,
 
     @Column(name = "updated_at", nullable = false)
-    var updatedAt: Instant?,
+    var updatedAt: Instant,
 ) : BaseDbEntity() {
-    constructor() : this(null, null, null, HashSet<OrderItemDb>(), null, null, null, null)
-
     // TODO: test
     private fun addOrderItem(orderItem: OrderItemDb) {
-        if (orderItems == null) {
-            orderItems = HashSet<OrderItemDb>()
-        }
-        orderItem.order = this
-        orderItems!!.add(orderItem)
+        orderItems = HashSet<OrderItemDb>()
+        orderItems.add(orderItem)
         calculateTotal()
     }
 
     private fun calculateTotal() {
-        total = orderItems?.sumByDouble { it.total!! }
+        total = orderItems.sumOf { it.total }
     }
 
     companion object {
         // TODO: test
         fun newInstance(
-            customer: CustomerDb?,
-            store: StoreDb?,
+            customer: CustomerDb,
+            store: StoreDb,
             orderItems: List<OrderItemDb?>
         ): OrderDb {
             val order = OrderDb(
                 id = null,
                 customer = customer,
                 store = store,
-                orderItems = null,
+                orderItems = HashSet<OrderItemDb>(),
                 total = 0.0,
                 status = Status.OPEN,
                 createdAt = Instant.now(),

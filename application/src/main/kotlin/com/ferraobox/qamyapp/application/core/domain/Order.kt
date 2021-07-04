@@ -4,18 +4,18 @@ import java.time.Instant
 
 data class Order(
     override var id: Identity,
-    var status: Status?,
-    var customer: Customer?,
-    var store: Store?,
-    var orderItems: List<OrderItem>?,
-    var total: Double?,
-    var createdAt: Instant?,
-    var updatedAt: Instant?
+    var status: Status,
+    var customer: Customer,
+    var store: Store,
+    var orderItems: List<OrderItem>,
+    var total: Double,
+    var createdAt: Instant,
+    var updatedAt: Instant
 
 ) : BaseDomainEntity() {
 
     fun calculateTotal(orderItems: List<OrderItem?>): Double {
-        return orderItems.sumByDouble { it!!.total }
+        return orderItems.sumOf { it!!.total }
     }
 
     fun delete(): Order {

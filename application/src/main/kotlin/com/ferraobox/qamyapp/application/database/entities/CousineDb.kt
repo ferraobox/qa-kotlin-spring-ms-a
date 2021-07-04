@@ -12,29 +12,24 @@ class CousineDb(
     override var id: Long?,
 
     @Column(unique = true, nullable = false)
-    var name: String?,
+    var name: String,
 
     @OneToMany(mappedBy = "cousine", cascade = [CascadeType.MERGE, CascadeType.PERSIST])
     @Default
-    var stores: MutableSet<StoreDb>? = HashSet()
+    var stores: MutableSet<StoreDb> = HashSet()
 
 ) : BaseDbEntity() {
-
-    constructor() : this(null, null, null)
-
     // TODO: test
     fun addStore(store: StoreDb) {
-        if (stores == null) {
-            stores = HashSet()
-        }
+        stores = HashSet()
         store.cousine = this
-        stores!!.add(store)
+        stores.add(store)
     }
 
     companion object {
         // TODO: test
-        fun newInstance(name: String?): CousineDb {
-            return CousineDb(id = null, name = name, stores = null)
+        fun newInstance(name: String): CousineDb {
+            return CousineDb(id = null, name = name, stores = HashSet())
         }
     }
 }

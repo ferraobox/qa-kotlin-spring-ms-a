@@ -6,5 +6,5 @@ import java.util.*
 
 interface IOrderRepository {
     fun persist(order: Order): Order
-    fun getById(id: Identity?): Optional<Order>
+    fun getById(id: Identity): Optional<Order>
 }

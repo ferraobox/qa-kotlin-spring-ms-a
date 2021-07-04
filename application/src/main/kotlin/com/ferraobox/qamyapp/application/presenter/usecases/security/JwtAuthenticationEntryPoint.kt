@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse
 class JwtAuthenticationEntryPoint : AuthenticationEntryPoint {
 
     companion object {
-        private val log = LoggerFactory.getLogger(this.javaClass)
+        private val log = LoggerFactory.getLogger(this::class.java)
     }
 
     @Throws(IOException::class)

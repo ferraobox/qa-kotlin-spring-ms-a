@@ -2,30 +2,39 @@ package com.ferraobox.qamyapp.application.presenter.mappers.domainDto
 
 import com.ferraobox.qamyapp.application.core.domain.Identity
 import com.ferraobox.qamyapp.application.core.domain.OrderItem
-import com.ferraobox.qamyapp.application.database.entities.IdConverter
+import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.ProductDomainDtoMapper.mapToDomain
+import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.ProductDomainDtoMapper.mapToDto
 import com.ferraobox.qamyapp.dto.OrderItemResponse
-import org.mapstruct.Mapper
-import org.mapstruct.Mapping
-import org.mapstruct.Mappings
-import org.mapstruct.ReportingPolicy
 import org.springframework.stereotype.Component
 
 @Component
-@Mapper(
-    unmappedTargetPolicy = ReportingPolicy.IGNORE,
-    componentModel = "spring",
-    imports = [IdConverter::class, Identity::class],
-    uses = []
-)
-interface OrderItemDomainDtoMapper : BaseDomainDtoMapper<OrderItem?, OrderItemResponse?> {
-    @Mappings(
-        Mapping(source = "product.name", target = "name"),
-        Mapping(source = "product.price", target = "price"),
-        Mapping(source = "quantity", target = "quantity"),
-        Mapping(source = "total", target = "total")
-    )
-    override fun mapToDto(customer: OrderItem?): OrderItemResponse?
-    override fun mapToDto(customer: List<OrderItem?>, list: Boolean): List<OrderItemResponse?>
-    override fun mapToDomain(customer: OrderItemResponse?): OrderItem?
-    override fun mapToDomain(customer: List<OrderItemResponse?>, list: Boolean): List<OrderItem?>
+object OrderItemDomainDtoMapper {
+
+    fun OrderItem.mapToDto(): OrderItemResponse {
+        return OrderItemResponse(
+            product = this.product.mapToDto(), price = this.price, quantity = this.quantity, total = this.total
+        )
+    }
+
+    fun List<OrderItem>.mapToDto(): List<OrderItemResponse> {
+        val orderItemListResponse = ArrayList<OrderItemResponse>()
+        forEach { orderItem -> orderItemListResponse.add(orderItem.mapToDto()) }
+        return orderItemListResponse
+    }
+
+    fun OrderItemResponse.mapToDomain(): OrderItem {
+        return OrderItem(
+            id = Identity(),
+            quantity = this.quantity,
+            product = this.product.mapToDomain(),
+            price = this.price,
+            total = this.total
+        )
+    }
+
+    fun List<OrderItemResponse>.mapToDomain(): List<OrderItem> {
+        val orderItemList = ArrayList<OrderItem>()
+        forEach { orderItem -> orderItemList.add(orderItem.mapToDomain()) }
+        return orderItemList
+    }
 }

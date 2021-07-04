@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
 interface DbCustomerRepository : JpaRepository<CustomerDb?, Long?> {
-    fun existsByEmail(email: String?): Boolean
-    fun findByEmail(email: String?): Optional<CustomerDb?>?
+    fun existsByEmail(email: String): Boolean
+    fun findByEmail(email: String): Optional<CustomerDb?>
 }

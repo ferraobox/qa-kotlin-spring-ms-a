@@ -17,9 +17,7 @@ class GetProductsByStoreAndProductsIdUseCase(private val repository: IProductRep
         val distinctProductsId: List<Identity> = input.productsId
         val foundProducts: List<Product> =
             repository.searchProductsByStoreAndProductsId(input.storeId, distinctProductsId)
-        if (distinctProductsId != null) {
-            throwIfAnyProductIsNotFound(distinctProductsId, foundProducts)
-        }
+        throwIfAnyProductIsNotFound(distinctProductsId, foundProducts)
         return OutputValues(foundProducts)
     }
 

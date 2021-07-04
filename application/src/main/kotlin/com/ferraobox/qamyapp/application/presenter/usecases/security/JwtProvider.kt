@@ -20,7 +20,7 @@ class JwtProvider(
     @param:Value("\${app.security.jwtExpirationInMs}") private val jwtExpirationInMs: Int
 ) {
     companion object {
-        private val log = LoggerFactory.getLogger(this.javaClass)
+        private val log = LoggerFactory.getLogger(this::class.java)
     }
 
     fun generateToken(authentication: Authentication): String {

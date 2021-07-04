@@ -4,7 +4,9 @@ import com.ferraobox.qamyapp.application.core.domain.Identity
 import com.ferraobox.qamyapp.application.core.usecases.UseCaseExecutor
 import com.ferraobox.qamyapp.application.core.usecases.order.*
 import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.CustomerDomainDtoMapper
+import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.CustomerDomainDtoMapper.mapToDto
 import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.OrderDomainDtoMapper
+import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.OrderDomainDtoMapper.mapToDto
 import com.ferraobox.qamyapp.application.presenter.mappers.inputOutputDto.CreateOrderInputMapper
 import com.ferraobox.qamyapp.application.presenter.usecases.security.CurrentUser
 import com.ferraobox.qamyapp.application.presenter.usecases.security.UserPrincipal
@@ -43,49 +45,49 @@ class OrderController(
     ): CompletableFuture<ResponseEntity<OrderResponse?>?> {
         return useCaseExecutor.execute(
             createOrderUseCase,
-            createOrderInputMapper.map(orderRequest, userPrincipal)
+            createOrderInputMapper.map(orderRequest!!, userPrincipal!!)
         ) { outputValues ->
             val location = ServletUriComponentsBuilder
                 .fromContextPath(httpServletRequest!!)
                 .path("/Order/{id}")
                 .buildAndExpand(outputValues.order!!.id.number)
                 .toUri()
-            ResponseEntity.created(location).body(orderDomainDtoMapper.mapToDto(outputValues.order))
+            ResponseEntity.created(location).body(outputValues.order.mapToDto())
         }
     }
 
     override fun getById(@PathVariable id: Long): CompletableFuture<OrderResponse?> {
         return useCaseExecutor.execute(
             getOrderUseCase,
-            GetOrderUseCase.InputValues(id=Identity(id))
-        ) { outputValues -> orderDomainDtoMapper.mapToDto(outputValues.order) }
+            GetOrderUseCase.InputValues(id = Identity(id))
+        ) { outputValues -> outputValues.order!!.mapToDto() }
     }
 
     override fun getCustomerById(@PathVariable id: Long): CompletableFuture<CustomerResponse?> {
         return useCaseExecutor.execute(
             getCustomerOrderUseCase,
-            GetCustomerOrderUseCase.InputValues(id=Identity(id))
-        ) { outputValues -> customerDomainDtoMapper.mapToDto(outputValues.customer) }
+            GetCustomerOrderUseCase.InputValues(id = Identity(id))
+        ) { outputValues -> outputValues.customer!!.mapToDto() }
     }
 
     override fun delete(@PathVariable id: Long): CompletableFuture<ApiResponse?> {
         return useCaseExecutor.execute(
             deleteOrderUseCase,
-            UpdateOrderUseCase.InputValues(id=Identity(id))
-        ) { outputValues -> ApiResponse(true, "Order successfully canceled") }
+            UpdateOrderUseCase.InputValues(id = Identity(id))
+        ) { ApiResponse(true, "Order successfully canceled") }
     }
 
     override fun pay(@PathVariable id: Long): CompletableFuture<ApiResponse?> {
         return useCaseExecutor.execute(
             payOrderUseCase,
-            UpdateOrderUseCase.InputValues(id=Identity(id))
-        ) { outputValues -> ApiResponse(true, "Order successfully paid") }
+            UpdateOrderUseCase.InputValues(id = Identity(id))
+        ) { ApiResponse(true, "Order successfully paid") }
     }
 
     override fun delivery(@PathVariable id: Long): CompletableFuture<ApiResponse?> {
         return useCaseExecutor.execute(
             deliveryOrderUseCase,
-            UpdateOrderUseCase.InputValues(id=Identity(id))
-        ) { outputValues -> ApiResponse(true, "Order successfully delivered") }
+            UpdateOrderUseCase.InputValues(id = Identity(id))
+        ) { ApiResponse(true, "Order successfully delivered") }
     }
 }

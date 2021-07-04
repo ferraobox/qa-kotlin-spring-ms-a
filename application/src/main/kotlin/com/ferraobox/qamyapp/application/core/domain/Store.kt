@@ -5,4 +5,5 @@ data class Store(
     var name: String,
     var address: String,
     var cousine: Cousine,
+    var products: List<Product>
 ) : BaseDomainEntity()

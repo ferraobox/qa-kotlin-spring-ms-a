@@ -2,36 +2,46 @@ package com.ferraobox.qamyapp.application.presenter.mappers.domainDto
 
 import com.ferraobox.qamyapp.application.core.domain.Identity
 import com.ferraobox.qamyapp.application.core.domain.Store
-import com.ferraobox.qamyapp.application.database.entities.IdConverter
+import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.CousineDomainDtoMapper.mapToDomain
+import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.CousineDomainDtoMapper.mapToDto
+import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.ProductDomainDtoMapper.mapToDomain
+import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.ProductDomainDtoMapper.mapToDto
 import com.ferraobox.qamyapp.dto.StoreResponse
-import org.mapstruct.Mapper
-import org.mapstruct.Mapping
-import org.mapstruct.Mappings
-import org.mapstruct.ReportingPolicy
 import org.springframework.stereotype.Component
 
 @Component
-@Mapper(
-    unmappedTargetPolicy = ReportingPolicy.IGNORE,
-    componentModel = "spring",
-    imports = [IdConverter::class, Identity::class],
-    uses = []
-)
-interface StoreDomainDtoMapper : BaseDomainDtoMapper<Store?, StoreResponse?> {
+object StoreDomainDtoMapper {
 
-    @Mappings(
-        Mapping(expression = "java(IdConverter.INSTANCE.convertId(store.getId()))", target = "id"),
-        Mapping(source = "name", target = "name"),
-        Mapping(source = "address", target = "address")
-    )
-    override fun mapToDto(store: Store?): StoreResponse?
-    override fun mapToDto(store: List<Store?>, list: Boolean): List<StoreResponse?>
+    fun Store.mapToDto(): StoreResponse {
+        return StoreResponse(
+            id = this.id.number,
+            name = this.name,
+            address = this.address,
+            cousine = this.cousine.mapToDto(),
+            products = this.products.mapToDto()
+        )
+    }
 
-    @Mappings(
-        Mapping(expression = "java(new Identity(store.getId()))", target = "id"),
-        Mapping(source = "name", target = "name"),
-        Mapping(source = "address", target = "address")
-    )
-    override fun mapToDomain(store: StoreResponse?): Store?
-    override fun mapToDomain(store: List<StoreResponse?>, list: Boolean): List<Store?>
+    fun List<Store>.mapToDto(): List<StoreResponse> {
+        val storeListResponse = ArrayList<StoreResponse>()
+        forEach { store -> storeListResponse.add(store.mapToDto()) }
+        return storeListResponse
+    }
+
+
+    fun StoreResponse.mapToDomain(): Store {
+        return Store(
+            id = Identity(this.id),
+            name = this.name,
+            address = this.address,
+            cousine = this.cousine.mapToDomain(),
+            products = this.products.mapToDomain()
+        )
+    }
+
+    fun List<StoreResponse>.mapToDomain(): List<Store> {
+        val storeList = ArrayList<Store>()
+        forEach { store -> storeList.add(store.mapToDomain()) }
+        return storeList
+    }
 }
