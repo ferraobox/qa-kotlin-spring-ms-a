@@ -1,5 +1,6 @@
 package com.ferraobox.qamyapp.application.presenter.usecases.security
 
+import com.ferraobox.qamyapp.application.core.mappers.CustomerDomainDbMapper.mapToDb
 import com.ferraobox.qamyapp.application.core.repositories.ICustomerRepository
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -17,7 +18,7 @@ open class CustomUserDetailsService(private val customerRepository: ICustomerRep
         val customerData = customerRepository
             .findByEmail(email)
             .orElseThrow { UsernameNotFoundException(String.format("User %s not found", email)) }
-        return UserPrincipal.from(customerData!!)
+        return UserPrincipal.from(customerData.mapToDb())
     }
 
     @Transactional
@@ -25,6 +26,6 @@ open class CustomUserDetailsService(private val customerRepository: ICustomerRep
         val customer = customerRepository
             .findById(id)
             .orElseThrow { UsernameNotFoundException(String.format("User %s not found", id)) }
-        return UserPrincipal.from(customer!!)
+        return UserPrincipal.from(customer.mapToDb())
     }
 }

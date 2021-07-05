@@ -2,6 +2,8 @@ package com.ferraobox.qamyapp.application.core.mappers
 
 import com.ferraobox.qamyapp.application.core.domain.Identity
 import com.ferraobox.qamyapp.application.core.domain.OrderItem
+import com.ferraobox.qamyapp.application.core.mappers.OrderDomainDbMapper.mapToDb
+import com.ferraobox.qamyapp.application.core.mappers.OrderDomainDbMapper.mapToDomain
 import com.ferraobox.qamyapp.application.core.mappers.ProductDomainDbMapper.mapToDb
 import com.ferraobox.qamyapp.application.core.mappers.ProductDomainDbMapper.mapToDomain
 import com.ferraobox.qamyapp.application.database.entities.IdConverter
@@ -16,6 +18,7 @@ object OrderItemDomainDbMapper {
         return OrderItemDb(
             id = IdConverter.convertId(this.id),
             quantity = this.quantity,
+            order = this.order.mapToDb(),
             product = this.product.mapToDb(),
             total = this.total,
             price = this.price
@@ -33,6 +36,7 @@ object OrderItemDomainDbMapper {
         return OrderItem(
             id = Identity(this.id!!),
             quantity = this.quantity,
+            order = this.order.mapToDomain(),
             product = this.product.mapToDomain(),
             total = this.total,
             price = this.price

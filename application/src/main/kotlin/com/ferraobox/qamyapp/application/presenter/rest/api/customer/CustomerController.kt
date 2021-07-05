@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
 
 @Component
-class CustomerController(
+open class CustomerController(
     private val useCaseExecutor: UseCaseExecutor,
     private val createCustomerUseCase: CreateCustomerUseCase,
     private val authenticateCustomerUseCase: AuthenticateCustomerUseCase,

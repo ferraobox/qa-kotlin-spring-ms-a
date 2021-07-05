@@ -7,7 +7,7 @@ import java.util.function.Consumer
 import javax.persistence.*
 
 @Entity(name = "order")
-@Table(name = "orders")
+@Table(name = "order")
 class OrderDb(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,9 +21,9 @@ class OrderDb(
     @JoinColumn(name = "store_id", nullable = false)
     var store: StoreDb,
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(mappedBy = "order")
     @Default
-    var orderItems: MutableSet<OrderItemDb> = HashSet<OrderItemDb>(),
+    var orderItems: MutableSet<OrderItemDb> = HashSet(),
 
     @Column(nullable = false)
     var total: Double,
@@ -40,7 +40,7 @@ class OrderDb(
 ) : BaseDbEntity() {
     // TODO: test
     private fun addOrderItem(orderItem: OrderItemDb) {
-        orderItems = HashSet<OrderItemDb>()
+        orderItems = HashSet()
         orderItems.add(orderItem)
         calculateTotal()
     }

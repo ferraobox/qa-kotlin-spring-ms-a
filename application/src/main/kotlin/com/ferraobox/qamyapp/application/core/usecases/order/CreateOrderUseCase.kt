@@ -4,6 +4,7 @@ import com.ferraobox.qamyapp.application.core.domain.*
 import com.ferraobox.qamyapp.application.core.repositories.IOrderRepository
 import com.ferraobox.qamyapp.application.core.usecases.UseCase
 import com.ferraobox.qamyapp.application.core.usecases.product.GetProductsByStoreAndProductsIdUseCase
+import com.ferraobox.qamyapp.application.core.usecases.store.GetStoreUseCase
 import com.ferraobox.qamyapp.dto.OrderRequestItem
 import org.springframework.stereotype.Component
 import java.time.Instant
@@ -12,6 +13,7 @@ import java.time.Instant
 @Component
 open class CreateOrderUseCase(
     private val getProductsByStoreAndProductsIdUseCase: GetProductsByStoreAndProductsIdUseCase,
+    private val getStoreUseCase: GetStoreUseCase,
     private val orderRepository: IOrderRepository
 ) : UseCase<CreateOrderUseCase.InputValues, CreateOrderUseCase.OutputValues> {
 
@@ -21,37 +23,35 @@ open class CreateOrderUseCase(
     }
 
     private fun createOrder(input: InputValues): Order {
-        val orderItems: List<OrderItem> = createOrderItems(input)
         val order = Order(
             id = Identity(),
             customer = input.customer,
-            store = getFirstProductStore(orderItems),
-            orderItems = orderItems,
+            store = getStoreUseCase.execute(GetStoreUseCase.InputValues(input.storeId)).store!!,
+            orderItems = ArrayList(),
             status = Status.OPEN,
             createdAt = Instant.now(),
             updatedAt = Instant.now(),
             total = 0.0
         )
+        val orderItems: List<OrderItem> = createOrderItems(input, order)
+        order.orderItems = orderItems
         order.total = order.calculateTotal(orderItems)
         return order
 
     }
 
-    private fun getFirstProductStore(orderItems: List<OrderItem>): Store {
-        return orderItems[0].product.store
-    }
-
-    private fun createOrderItems(input: InputValues): List<OrderItem> {
+    private fun createOrderItems(input: InputValues, order: Order): List<OrderItem> {
         val productMap: Map<Identity, Product> = getProducts(input)
-        return input.orderItems.map { inputItem -> createOrderItem(inputItem, productMap) }.toList()
+        return input.orderItems.map { inputItem -> createOrderItem(inputItem, productMap, order) }.toList()
     }
 
-    private fun createOrderItem(inputItem: OrderRequestItem, productMap: Map<Identity, Product>): OrderItem {
+    private fun createOrderItem(inputItem: OrderRequestItem, productMap: Map<Identity, Product>, order: Order): OrderItem {
         val productId = Identity(inputItem.id)
         val product: Product = productMap[productId]!!
         return OrderItem(
             id = Identity(),
             product = product,
+            order = order,
             quantity = inputItem.quantity,
             total = (inputItem.quantity * product.price),
             price = product.price
@@ -79,11 +79,9 @@ open class CreateOrderUseCase(
         var orderItems: List<OrderRequestItem>
     ) : UseCase.InputValues
 
-
     data class OutputValues(
         val order: Order?
     ) : UseCase.OutputValues
-
 
     data class InputItem(
         var id: Identity,

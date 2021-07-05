@@ -25,7 +25,7 @@ import javax.validation.Valid
 
 
 @Component
-class OrderController(
+open class OrderController(
     private val useCaseExecutor: UseCaseExecutor,
     private val createOrderUseCase: CreateOrderUseCase,
     private val getOrderUseCase: GetOrderUseCase,

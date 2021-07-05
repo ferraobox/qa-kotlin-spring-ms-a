@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture
 
 
 @Component
-class StoreController(
+open class StoreController(
     private val useCaseExecutor: UseCaseExecutor,
     private val getAllStoresUseCase: GetAllStoresUseCase,
     private val searchStoresByNameUseCase: SearchStoresByNameUseCase,

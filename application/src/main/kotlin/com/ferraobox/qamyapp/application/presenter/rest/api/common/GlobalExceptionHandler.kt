@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 
 @ControllerAdvice
-class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
+open class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
     @ExceptionHandler(value = [AuthenticationException::class])
     fun handleAuthenticationException(ex: AuthenticationException): ResponseEntity<ApiResponse> {
         return ResponseEntity<ApiResponse>(ApiResponse(false, ex.message), HttpStatus.BAD_REQUEST)

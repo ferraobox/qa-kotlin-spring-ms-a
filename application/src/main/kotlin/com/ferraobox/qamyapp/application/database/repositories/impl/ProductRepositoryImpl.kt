@@ -11,7 +11,7 @@ import java.util.stream.Collectors
 import kotlin.streams.toList
 
 @Repository
-class ProductRepositoryImpl(
+open class ProductRepositoryImpl(
     private val repository: DbProductRepository,
 ) : IProductRepository {
 

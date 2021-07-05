@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-class OrderRepositoryImpl(
+open class OrderRepositoryImpl(
     private val repository: DbOrderRepository,
 ) : IOrderRepository {
 

@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 
 
 @Component
-class ProductController(
+open class ProductController(
     private val useCaseExecutor: UseCaseExecutor,
     private val getAllProductsUseCase: GetAllProductsUseCase,
     private val getProductUseCase: GetProductUseCase,

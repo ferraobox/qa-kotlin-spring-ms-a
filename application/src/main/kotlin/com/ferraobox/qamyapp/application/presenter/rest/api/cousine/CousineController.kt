@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture
 
 
 @Component
-class CousineController(
+open class CousineController(
     private val useCaseExecutor: UseCaseExecutor,
     private val getAllCousinesUseCase: GetAllCousinesUseCase,
     private val getStoresByCousineUseCase: GetStoresByCousineUseCase,

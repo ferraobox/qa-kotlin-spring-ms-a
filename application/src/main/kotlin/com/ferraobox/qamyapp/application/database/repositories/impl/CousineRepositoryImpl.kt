@@ -8,19 +8,19 @@ import org.springframework.stereotype.Repository
 import java.util.stream.Collectors
 
 @Repository
-class CousineRepositoryImpl(
-    private val dbCousineRepository: DbCousineRepository,
+open class CousineRepositoryImpl(
+    private val repository: DbCousineRepository,
 ) : ICousineRepository {
 
     override fun all(): List<Cousine> {
-        return dbCousineRepository
+        return repository
             .findAll()
             .parallelStream()
             .map { c -> c?.mapToDomain() }.collect(Collectors.toList<Cousine>())
     }
 
     override fun searchByName(search: String): List<Cousine> {
-        return dbCousineRepository
+        return repository
             .findByNameContainingIgnoreCase(search)
             .parallelStream()
             .map { c -> c?.mapToDomain() }.collect(Collectors.toList<Cousine>())
