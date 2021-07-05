@@ -4,8 +4,6 @@ import com.ferraobox.qamyapp.application.core.domain.Identity
 
 object IdConverter {
     fun convertId(id: Identity?): Long? {
-        return if (id != null && id.number !== Long.MIN_VALUE) {
-            id.number
-        } else null
+        return id?.number
     }
 }

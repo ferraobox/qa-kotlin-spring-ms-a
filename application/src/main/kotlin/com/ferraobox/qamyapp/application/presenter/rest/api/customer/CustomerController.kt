@@ -2,7 +2,7 @@ package com.ferraobox.qamyapp.application.presenter.rest.api.customer
 
 import com.ferraobox.qamyapp.application.core.usecases.UseCaseExecutor
 import com.ferraobox.qamyapp.application.core.usecases.customer.CreateCustomerUseCase
-import com.ferraobox.qamyapp.application.presenter.binding.PublisherService
+//import com.ferraobox.qamyapp.application.presenter.binding.PublisherService
 import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.CustomerDomainDtoMapper.mapToDto
 import com.ferraobox.qamyapp.application.presenter.mappers.inputOutputDto.AuthenticateCustomerUseCaseInputMapper.map
 import com.ferraobox.qamyapp.application.presenter.mappers.inputOutputDto.AuthenticateCustomerUseCaseOutputMapper.map
@@ -25,7 +25,7 @@ open class CustomerController(
     private val useCaseExecutor: UseCaseExecutor,
     private val createCustomerUseCase: CreateCustomerUseCase,
     private val authenticateCustomerUseCase: AuthenticateCustomerUseCase,
-    private val publishService: PublisherService
+    //private val publishService: PublisherService
 ) {
 
     fun signUp(
@@ -43,7 +43,7 @@ open class CustomerController(
                 .toUri()
             ResponseEntity.created(location).body(outputValues.customer.mapToDto())
         }
-        publishService.send("created user event", "execute-producer-out-0")
+        //publishService.send("created user event", "execute-producer-out-0")
         return response
     }
 

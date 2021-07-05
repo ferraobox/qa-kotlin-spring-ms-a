@@ -1,10 +1,12 @@
 package com.ferraobox.qamyapp.application.presenter.binding
-
+/**
+ *
 import org.slf4j.LoggerFactory
 import org.springframework.cloud.stream.function.StreamBridge
 import org.springframework.messaging.support.MessageBuilder
 import org.springframework.stereotype.Service
 import java.io.Serializable
+
 
 @Service
 class PublisherService (
@@ -20,3 +22,5 @@ class PublisherService (
     }
 
 }
+
+ **/

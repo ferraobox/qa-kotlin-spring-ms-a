@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component
 import java.security.SignatureException
 import java.util.*
 
-
 @Component
 class JwtProvider(
     @param:Value("\${app.security.jwtSecret}") private val jwtSecret: String,

@@ -10,13 +10,13 @@ import javax.servlet.Servlet
 open class QamyappApplication
 
 fun main(args: Array<String>) {
-	runApplication<QamyappApplication>(*args)
-	println("Hello application running!!")
+    runApplication<QamyappApplication>(*args)
+    println("Hello application running!!")
 }
 
 @Bean
 fun h2servletRegistration(): ServletRegistrationBean<*> {
-	val registration: ServletRegistrationBean<*> = ServletRegistrationBean<Servlet>()
-	registration.addUrlMappings("/console/*")
-	return registration
+    val registration: ServletRegistrationBean<*> = ServletRegistrationBean<Servlet>()
+    registration.addUrlMappings("/console/*")
+    return registration
 }
