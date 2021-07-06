@@ -16,7 +16,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
@@ -42,7 +42,7 @@ open class WebSecurityConfig(
 
     @Bean
     open fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean
@@ -70,14 +70,14 @@ open class WebSecurityConfig(
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            //.authorizeRequests()
-            //.antMatchers("/Customer/**").permitAll()
-            //.antMatchers("/Cousine/**").permitAll()
-            //.antMatchers("/Store/**").permitAll()
-            //.antMatchers("/Product/**").permitAll()
-            //.antMatchers("/h2-console/**").permitAll()
-            //.antMatchers(HttpMethod.GET, "/Order/**").permitAll()
-        //.anyRequest().authenticated()
+            .authorizeRequests()
+            .antMatchers("/customer/**").permitAll()
+            .antMatchers("/cousine/**").permitAll()
+            .antMatchers("/store/**").permitAll()
+            .antMatchers("/product/**").permitAll()
+            .antMatchers("/h2-console/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/order/**").permitAll()
+            .anyRequest().authenticated()
         // @formatter:on
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)

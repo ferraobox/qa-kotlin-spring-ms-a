@@ -6,7 +6,7 @@ import javax.persistence.*
 @Entity(name = "customer")
 class CustomerDb(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     override var id: Long?,
 
     @Column(nullable = false)

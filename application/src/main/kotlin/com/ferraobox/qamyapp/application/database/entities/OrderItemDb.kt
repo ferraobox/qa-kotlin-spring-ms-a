@@ -6,12 +6,12 @@ import javax.persistence.*
 @Table(name = "orderitem")
 class OrderItemDb(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     override var id: Long?,
 
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    var order: OrderDb,
+    @JoinColumn(name = "order_id")
+    var order: OrderDb?,
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)

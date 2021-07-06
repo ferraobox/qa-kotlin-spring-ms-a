@@ -7,7 +7,7 @@ import javax.persistence.*
 @Entity(name = "store")
 class StoreDb(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     override var id: Long?,
 
     @Column(unique = true, nullable = false)
@@ -27,8 +27,8 @@ class StoreDb(
 
     companion object {
         // TODO: test
-        fun newInstance(name: String,address: String,cousine: CousineDb): StoreDb {
-            return StoreDb(id = null, name = name, address=address, cousine=cousine, products = HashSet())
+        fun newInstance(name: String, address: String, cousine: CousineDb): StoreDb {
+            return StoreDb(id = null, name = name, address = address, cousine = cousine, products = HashSet())
         }
     }
 }

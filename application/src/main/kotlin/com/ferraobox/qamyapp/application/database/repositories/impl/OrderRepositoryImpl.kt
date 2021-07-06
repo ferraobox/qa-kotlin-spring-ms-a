@@ -4,6 +4,7 @@ import com.ferraobox.qamyapp.application.core.domain.Identity
 import com.ferraobox.qamyapp.application.core.domain.Order
 import com.ferraobox.qamyapp.application.core.mappers.OrderDomainDbMapper.mapToDb
 import com.ferraobox.qamyapp.application.core.mappers.OrderDomainDbMapper.mapToDomain
+import com.ferraobox.qamyapp.application.core.mappers.OrderItemDomainDbMapper.mapToDb
 import com.ferraobox.qamyapp.application.core.repositories.IOrderRepository
 import com.ferraobox.qamyapp.application.database.entities.OrderDb
 import com.ferraobox.qamyapp.application.database.repositories.DbOrderRepository
@@ -16,8 +17,10 @@ open class OrderRepositoryImpl(
 ) : IOrderRepository {
 
     override fun persist(order: Order): Order {
-        val orerDb: OrderDb = order.mapToDb()
-        return repository.save(orerDb).mapToDomain()
+        val orderDb: OrderDb = order.mapToDb()
+        orderDb.orderItems = order.orderItems.mapToDb()
+        orderDb.orderItems.forEach { orderItem -> orderItem.order = orderDb }
+        return repository.save(orderDb).mapToDomain()
     }
 
     override fun getById(id: Identity): Optional<Order> {

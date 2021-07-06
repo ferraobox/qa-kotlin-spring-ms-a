@@ -4,11 +4,9 @@ import com.ferraobox.qamyapp.application.core.domain.Identity
 import com.ferraobox.qamyapp.application.core.domain.Order
 import com.ferraobox.qamyapp.application.core.mappers.CustomerDomainDbMapper.mapToDb
 import com.ferraobox.qamyapp.application.core.mappers.CustomerDomainDbMapper.mapToDomain
-import com.ferraobox.qamyapp.application.core.mappers.OrderItemDomainDbMapper.mapToDb
 import com.ferraobox.qamyapp.application.core.mappers.OrderItemDomainDbMapper.mapToDomain
 import com.ferraobox.qamyapp.application.core.mappers.StoreDomainDbMapper.mapToDb
 import com.ferraobox.qamyapp.application.core.mappers.StoreDomainDbMapper.mapToDomain
-import com.ferraobox.qamyapp.application.database.entities.IdConverter
 import com.ferraobox.qamyapp.application.database.entities.OrderDb
 import kotlin.collections.ArrayList
 
@@ -17,13 +15,12 @@ object OrderDomainDbMapper {
 
     fun Order.mapToDb(): OrderDb {
         return OrderDb(
-            id = IdConverter.convertId(this.id),
+            id = this.id.number,
             customer = this.customer.mapToDb(),
             store = this.store.mapToDb(),
-            orderItems = this.orderItems.mapToDb(),
             total = this.total,
             status = this.status,
-            createdAt = this.updatedAt,
+            createdAt = this.createdAt,
             updatedAt = this.updatedAt
         )
     }
@@ -41,9 +38,9 @@ object OrderDomainDbMapper {
             id = Identity(this.id!!),
             customer = this.customer.mapToDomain(),
             store = this.store.mapToDomain(),
-            orderItems = this.orderItems.mapToDomain(),
             total = this.total,
             status = this.status,
+            orderItems= this.orderItems.mapToDomain(),
             createdAt = this.updatedAt,
             updatedAt = this.updatedAt
         )

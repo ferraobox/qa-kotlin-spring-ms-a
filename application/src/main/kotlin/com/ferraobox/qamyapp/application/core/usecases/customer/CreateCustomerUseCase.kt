@@ -27,14 +27,12 @@ open class CreateCustomerUseCase(
         return OutputValues(repository.persist(customer))
     }
 
-
     data class InputValues (
         var name: String,
         var email: String,
         var address: String,
         var password: String
     ): UseCase.InputValues
-
 
     data class OutputValues (
         var customer: Customer

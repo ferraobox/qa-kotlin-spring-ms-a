@@ -3,9 +3,7 @@ package com.ferraobox.qamyapp.application.presenter.rest.api.order
 import com.ferraobox.qamyapp.application.core.domain.Identity
 import com.ferraobox.qamyapp.application.core.usecases.UseCaseExecutor
 import com.ferraobox.qamyapp.application.core.usecases.order.*
-import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.CustomerDomainDtoMapper
 import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.CustomerDomainDtoMapper.mapToDto
-import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.OrderDomainDtoMapper
 import com.ferraobox.qamyapp.application.presenter.mappers.domainDto.OrderDomainDtoMapper.mapToDto
 import com.ferraobox.qamyapp.application.presenter.mappers.inputOutputDto.CreateOrderInputMapper
 import com.ferraobox.qamyapp.application.presenter.usecases.security.CurrentUser
@@ -22,7 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.util.concurrent.CompletableFuture
 import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
-
 
 @Component
 open class OrderController(
@@ -47,7 +44,7 @@ open class OrderController(
         ) { outputValues ->
             val location = ServletUriComponentsBuilder
                 .fromContextPath(httpServletRequest!!)
-                .path("/Order/{id}")
+                .path("/order/{id}")
                 .buildAndExpand(outputValues.order!!.id.number)
                 .toUri()
             ResponseEntity.created(location).body(outputValues.order.mapToDto())

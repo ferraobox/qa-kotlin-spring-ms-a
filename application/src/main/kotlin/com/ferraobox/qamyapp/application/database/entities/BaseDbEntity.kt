@@ -6,6 +6,6 @@ import javax.persistence.Id
 
 open class BaseDbEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     open var id: Long? = null
 }

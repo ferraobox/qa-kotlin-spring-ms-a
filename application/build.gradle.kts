@@ -6,7 +6,7 @@ plugins {
 dependencies {
     implementation(rootProject)
     implementation(project(":dto"))
-    implementation("io.jsonwebtoken:jjwt:0.2")
+    implementation("io.jsonwebtoken:jjwt:0.9.0")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.PathVariable
 import java.util.concurrent.CompletableFuture
 
-
 @Component
 open class ProductController(
     private val useCaseExecutor: UseCaseExecutor,

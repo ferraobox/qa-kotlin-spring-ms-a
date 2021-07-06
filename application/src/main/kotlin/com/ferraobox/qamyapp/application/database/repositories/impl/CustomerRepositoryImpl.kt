@@ -18,8 +18,7 @@ open class CustomerRepositoryImpl(
 ) : ICustomerRepository {
 
     override fun persist(customer: Customer): Customer {
-        val customerData: CustomerDb = customer.mapToDb()
-        return repository.save(customerData).mapToDomain()
+        return repository.save(customer.mapToDb()).mapToDomain()
     }
 
     override fun existsByEmail(email: String): Boolean {

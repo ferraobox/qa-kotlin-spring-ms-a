@@ -14,7 +14,7 @@ object OrderItemDomainDtoMapper {
 
     fun OrderItem.mapToDto(): OrderItemResponse {
         return OrderItemResponse(
-            order = this.order.mapToDto(),product = this.product.mapToDto(), price = this.price, quantity = this.quantity, total = this.total
+            product = this.product.mapToDto(), price = this.price, quantity = this.quantity, total = this.total
         )
     }
 
@@ -27,7 +27,6 @@ object OrderItemDomainDtoMapper {
     fun OrderItemResponse.mapToDomain(): OrderItem {
         return OrderItem(
             id = Identity(),
-            order=this.order.mapToDomain(),
             quantity = this.quantity,
             product = this.product.mapToDomain(),
             price = this.price,

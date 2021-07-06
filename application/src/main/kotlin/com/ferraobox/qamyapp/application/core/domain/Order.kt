@@ -14,9 +14,12 @@ data class Order(
 
 ) : BaseDomainEntity() {
 
-    fun calculateTotal(orderItems: List<OrderItem?>): Double {
-        return orderItems.sumOf { it!!.total }
+    companion object{
+        fun calculateTotal(orderItems: List<OrderItem?>): Double {
+            return orderItems.sumOf { it!!.total }
+        }
     }
+
 
     fun delete(): Order {
         check(!(status !== Status.OPEN)) { "Order should be open to be cancelled" }

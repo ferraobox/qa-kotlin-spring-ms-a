@@ -10,7 +10,7 @@ import javax.persistence.*
 @Table(name = "order")
 class OrderDb(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     override var id: Long?,
 
     @ManyToOne
@@ -21,12 +21,12 @@ class OrderDb(
     @JoinColumn(name = "store_id", nullable = false)
     var store: StoreDb,
 
-    @OneToMany(mappedBy = "order", cascade = [CascadeType.MERGE, CascadeType.PERSIST])
-    @Default
-    var orderItems: MutableSet<OrderItemDb> = HashSet(),
-
     @Column(nullable = false)
     var total: Double,
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = [CascadeType.ALL])
+    @Default
+    var orderItems: MutableSet<OrderItemDb> = HashSet(),
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -60,7 +60,7 @@ class OrderDb(
                 id = null,
                 customer = customer,
                 store = store,
-                orderItems = HashSet<OrderItemDb>(),
+                orderItems = HashSet(),
                 total = 0.0,
                 status = Status.OPEN,
                 createdAt = Instant.now(),

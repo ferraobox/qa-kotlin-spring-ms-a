@@ -17,8 +17,8 @@ object OrderItemDomainDbMapper {
     fun OrderItem.mapToDb(): OrderItemDb {
         return OrderItemDb(
             id = IdConverter.convertId(this.id),
+            order = null,
             quantity = this.quantity,
-            order = this.order.mapToDb(),
             product = this.product.mapToDb(),
             total = this.total,
             price = this.price
@@ -36,7 +36,6 @@ object OrderItemDomainDbMapper {
         return OrderItem(
             id = Identity(this.id!!),
             quantity = this.quantity,
-            order = this.order.mapToDomain(),
             product = this.product.mapToDomain(),
             total = this.total,
             price = this.price

@@ -13,15 +13,14 @@ import java.util.concurrent.CompletableFuture
 import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
 
-
 @RestController
 @RequestMapping("/customer")
 interface CustomerResource {
     @PostMapping
     fun signUp(
-        @RequestBody request: @Valid SignUpRequest?, httpServletRequest: HttpServletRequest?
-    ): CompletableFuture<ResponseEntity<CustomerResponse?>?>?
+        @RequestBody signUpRequest: @Valid SignUpRequest, httpServletRequest: HttpServletRequest
+    ): CompletableFuture<ResponseEntity<CustomerResponse>>
 
     @PostMapping("/auth")
-    fun signIn(@RequestBody request: @Valid SignInRequest?): CompletableFuture<ResponseEntity<AuthenticationResponse?>?>?
+    fun signIn(@RequestBody signInRequest: @Valid SignInRequest): CompletableFuture<ResponseEntity<AuthenticationResponse>>
 }

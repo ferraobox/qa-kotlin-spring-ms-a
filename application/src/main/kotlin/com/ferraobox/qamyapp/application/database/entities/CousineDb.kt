@@ -8,13 +8,13 @@ import javax.persistence.*
 @Table(name = "cousine")
 class CousineDb(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     override var id: Long?,
 
     @Column(unique = true, nullable = false)
     var name: String,
 
-    @OneToMany(mappedBy = "cousine", cascade = [CascadeType.MERGE, CascadeType.PERSIST])
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cousine", cascade = [CascadeType.ALL])
     @Default
     var stores: MutableSet<StoreDb> = HashSet()
 

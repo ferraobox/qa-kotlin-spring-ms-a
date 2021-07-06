@@ -12,45 +12,42 @@ import java.time.Instant
 @Component
 open class CreateOrderUseCase(
     private val getProductsByStoreAndProductsIdUseCase: GetProductsByStoreAndProductsIdUseCase,
-    private val getStoreUseCase: GetStoreUseCase,
     private val orderRepository: IOrderRepository
 ) : UseCase<CreateOrderUseCase.InputValues, CreateOrderUseCase.OutputValues> {
 
     override fun execute(input: InputValues): OutputValues {
-        val order: Order = createOrder(input)
-        return OutputValues(orderRepository.persist(order))
+        return OutputValues(orderRepository.persist(createOrder(input)))
     }
 
     private fun createOrder(input: InputValues): Order {
-        val order = Order(
+        val orderItems: List<OrderItem> = createOrderItems(input)
+        return Order(
             id = Identity(),
             customer = input.customer,
-            store = getStoreUseCase.execute(GetStoreUseCase.InputValues(input.storeId)).store!!,
-            orderItems = ArrayList(),
+            store = getFirstProductStore(orderItems),
+            orderItems = orderItems,
             status = Status.OPEN,
             createdAt = Instant.now(),
             updatedAt = Instant.now(),
-            total = 0.0
+            total = Order.calculateTotal(orderItems)
         )
-        val orderItems: List<OrderItem> = createOrderItems(input, order)
-        order.orderItems = orderItems
-        order.total = order.calculateTotal(orderItems)
-        return order
-
     }
 
-    private fun createOrderItems(input: InputValues, order: Order): List<OrderItem> {
+    private fun getFirstProductStore(orderItems: List<OrderItem>): Store {
+        return orderItems[0].product.store
+    }
+
+    private fun createOrderItems(input: InputValues): List<OrderItem> {
         val productMap: Map<Identity, Product> = getProducts(input)
-        return input.orderItems.map { inputItem -> createOrderItem(inputItem, productMap, order) }.toList()
+        return input.orderItems.map { inputItem -> createOrderItem(inputItem, productMap) }.toList()
     }
 
-    private fun createOrderItem(inputItem: OrderRequestItem, productMap: Map<Identity, Product>, order: Order): OrderItem {
+    private fun createOrderItem(inputItem: OrderRequestItem, productMap: Map<Identity, Product>): OrderItem {
         val productId = Identity(inputItem.id)
         val product: Product = productMap[productId]!!
         return OrderItem(
             id = Identity(),
             product = product,
-            order = order,
             quantity = inputItem.quantity,
             total = (inputItem.quantity * product.price),
             price = product.price

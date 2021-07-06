@@ -5,7 +5,7 @@ import com.ferraobox.qamyapp.application.database.entities.StoreDb
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 
-interface DbStoreRepository : JpaRepository<StoreDb?, Long?> {
+interface DbStoreRepository : JpaRepository<StoreDb, Long> {
     fun findByNameContainingIgnoreCase(name: String?): List<StoreDb?>
 
     @Query("select p from store s join s.products p where s.id = ?1")

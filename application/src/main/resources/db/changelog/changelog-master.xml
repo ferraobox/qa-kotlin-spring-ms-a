@@ -5,4 +5,11 @@
 
     <include file="V1_schema.sql" relativeToChangelogFile="true"/>
 
+    <changeSet author="liquibase-docs"
+               id="createSequence-example">
+        <createSequence catalogName="cat" cycle="false"
+                        incrementBy="1" ordered="true" schemaName="public"
+                        sequenceName="hibernate_sequence" startValue="0" />
+    </changeSet>
+
 </databaseChangeLog>
