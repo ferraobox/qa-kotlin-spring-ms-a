@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Table(name = "customer")
 @Entity(name = "customer")
-class CustomerDb (
+class CustomerDb(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     override var id: Long?,
@@ -20,5 +20,12 @@ class CustomerDb (
 
     @Column(nullable = false)
     var password: String,
-): BaseDbEntity(){
+) : BaseDbEntity() {
+
+    companion object {
+        // TODO: test
+        fun newInstance(name: String, email: String, address: String, password: String): CustomerDb {
+            return CustomerDb(id = null, name = name, email = email, address = address, password = password)
+        }
+    }
 }

@@ -14,8 +14,8 @@ open class GetStoresByCousineUseCase(private val repository: IStoreRepository) :
 
     override fun execute(input: InputValues): OutputValues {
         val id: Identity = input.id
-        val stores: List<Store>? = repository.getStoresById(id)
-        if (stores!!.isEmpty()) {
+        val stores: List<Store> = repository.getStoresById(id)
+        if (stores.isEmpty()) {
             throw NotFoundException("Cousine %s not found", id.number)
         }
         return OutputValues(stores)

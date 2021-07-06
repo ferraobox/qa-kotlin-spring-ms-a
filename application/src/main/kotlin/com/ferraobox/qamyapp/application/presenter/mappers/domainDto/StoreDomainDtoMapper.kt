@@ -17,8 +17,7 @@ object StoreDomainDtoMapper {
             id = this.id.number,
             name = this.name,
             address = this.address,
-            cousine = this.cousine.mapToDto(),
-            products = this.products.mapToDto()
+            cousine = this.cousine.mapToDto()
         )
     }
 
@@ -34,8 +33,7 @@ object StoreDomainDtoMapper {
             id = Identity(this.id),
             name = this.name,
             address = this.address,
-            cousine = this.cousine.mapToDomain(),
-            products = this.products.mapToDomain()
+            cousine = this.cousine.mapToDomain()
         )
     }
 

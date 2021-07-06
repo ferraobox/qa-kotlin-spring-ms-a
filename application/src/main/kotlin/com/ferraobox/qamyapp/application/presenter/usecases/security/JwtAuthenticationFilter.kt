@@ -11,12 +11,11 @@ import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-
-class JwtAuthenticationFilter(
+open class JwtAuthenticationFilter(
     private val tokenProvider: JwtProvider,
     private val customUserDetailsService: CustomUserDetailsService
-) :
-    OncePerRequestFilter() {
+) : OncePerRequestFilter() {
+
     @Throws(ServletException::class, IOException::class)
     override fun doFilterInternal(
         request: HttpServletRequest,

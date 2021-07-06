@@ -10,9 +10,9 @@ import java.util.concurrent.CompletableFuture
 
 
 @RestController
-@RequestMapping("/Cousine")
+@RequestMapping("/cousine")
 interface CousineResource {
-    @GetMapping("/{id}/stores")
+    @GetMapping("/{id}/store")
     fun getStoresByCousineId(@PathVariable id: Long): CompletableFuture<List<StoreResponse?>?>
 
     @GetMapping

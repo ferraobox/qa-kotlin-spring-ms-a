@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service
 import java.util.concurrent.CompletableFuture
 import java.util.function.Function
 
-
 @Service
 class UseCaseExecutorImpl : UseCaseExecutor {
 

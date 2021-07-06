@@ -22,4 +22,12 @@ class ProductDb(
     @JoinColumn(name = "store_id", nullable = false)
     var store: StoreDb,
 ) : BaseDbEntity() {
+
+    companion object {
+        // TODO: test
+        fun newInstance(name: String, description: String, price: Double ,store: StoreDb,): ProductDb {
+            return ProductDb(id = null, name = name, description = description, price = price, store = store)
+        }
+    }
+
 }

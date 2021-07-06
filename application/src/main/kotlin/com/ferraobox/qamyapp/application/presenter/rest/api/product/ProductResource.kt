@@ -9,7 +9,7 @@ import java.util.concurrent.CompletableFuture
 
 
 @RestController
-@RequestMapping("/Product")
+@RequestMapping("/product")
 interface ProductResource {
     @GetMapping
     fun allProducts(): CompletableFuture<List<Any?>?>

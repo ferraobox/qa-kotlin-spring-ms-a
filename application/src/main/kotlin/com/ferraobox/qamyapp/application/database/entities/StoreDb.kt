@@ -16,12 +16,19 @@ class StoreDb(
     @Column(nullable = false)
     var address: String,
 
-    @javax.persistence.ManyToOne
+    @ManyToOne
     @JoinColumn(name = "cousine_id", nullable = false)
     var cousine: CousineDb,
 
-    @OneToMany(mappedBy = "store")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "store", cascade = [CascadeType.ALL])
     @Default
     var products: MutableSet<ProductDb> = HashSet()
 ) : BaseDbEntity() {
+
+    companion object {
+        // TODO: test
+        fun newInstance(name: String,address: String,cousine: CousineDb): StoreDb {
+            return StoreDb(id = null, name = name, address=address, cousine=cousine, products = HashSet())
+        }
+    }
 }

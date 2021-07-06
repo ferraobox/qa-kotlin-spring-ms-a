@@ -14,7 +14,7 @@ import java.security.SignatureException
 import java.util.*
 
 @Component
-class JwtProvider(
+open class JwtProvider(
     @param:Value("\${app.security.jwtSecret}") private val jwtSecret: String,
     @param:Value("\${app.security.jwtExpirationInMs}") private val jwtExpirationInMs: Int
 ) {

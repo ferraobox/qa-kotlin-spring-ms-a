@@ -15,7 +15,7 @@ import javax.validation.Valid
 
 
 @RestController
-@RequestMapping("/Customer")
+@RequestMapping("/customer")
 interface CustomerResource {
     @PostMapping
     fun signUp(

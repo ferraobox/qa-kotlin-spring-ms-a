@@ -16,7 +16,8 @@ open class CousineRepositoryImpl(
         return repository
             .findAll()
             .parallelStream()
-            .map { c -> c?.mapToDomain() }.collect(Collectors.toList<Cousine>())
+            .map { c -> c?.mapToDomain() }
+            .collect(Collectors.toList<Cousine>())
     }
 
     override fun searchByName(search: String): List<Cousine> {

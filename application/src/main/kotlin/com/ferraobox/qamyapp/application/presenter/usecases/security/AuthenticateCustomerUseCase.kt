@@ -6,7 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service
 
 @Service
-class AuthenticateCustomerUseCase(
+open class AuthenticateCustomerUseCase(
     private val authenticationManager: AuthenticationManager,
     private val jwtProvider: JwtProvider
 ) : UseCase<AuthenticateCustomerUseCase.InputValues, AuthenticateCustomerUseCase.OutputValues> {

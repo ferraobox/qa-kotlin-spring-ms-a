@@ -29,6 +29,7 @@ subprojects{
 	apply(plugin="kotlin")
 	apply(plugin = "org.liquibase.gradle")
 	apply(plugin="groovy")
+	apply(plugin="kotlin-jpa")
 
 	repositories {
 		mavenCentral()

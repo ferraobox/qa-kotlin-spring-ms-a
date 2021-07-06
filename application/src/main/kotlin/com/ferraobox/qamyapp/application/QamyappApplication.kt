@@ -6,7 +6,9 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean
 import org.springframework.context.annotation.Bean
 import javax.servlet.Servlet
 
-@SpringBootApplication
+@SpringBootApplication(
+    scanBasePackages = ["com.ferraobox.qamyapp.application.core.usecases", "com.ferraobox.qamyapp.application.core.mappers", "com.ferraobox.qamyapp.application.presenter", "com.ferraobox.qamyapp.application.presenter.mappers","com.ferraobox.qamyapp.application.presenter.rest.api", "com.ferraobox.qamyapp.application.database"],
+)
 open class QamyappApplication
 
 fun main(args: Array<String>) {

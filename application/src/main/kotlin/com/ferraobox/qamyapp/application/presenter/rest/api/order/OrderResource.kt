@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/Order")
+@RequestMapping("/order")
 interface OrderResource {
     @PostMapping
     @PreAuthorize("hasRole('USER')")

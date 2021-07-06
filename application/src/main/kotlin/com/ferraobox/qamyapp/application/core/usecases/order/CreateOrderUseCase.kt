@@ -9,7 +9,6 @@ import com.ferraobox.qamyapp.dto.OrderRequestItem
 import org.springframework.stereotype.Component
 import java.time.Instant
 
-
 @Component
 open class CreateOrderUseCase(
     private val getProductsByStoreAndProductsIdUseCase: GetProductsByStoreAndProductsIdUseCase,
@@ -65,8 +64,6 @@ open class CreateOrderUseCase(
                 productsId = createListOfProductsId(input.orderItems)
             )
         return getProductsByStoreAndProductsIdUseCase.execute(inputValues).products.associateBy { it.id }
-
-
     }
 
     private fun createListOfProductsId(inputItems: List<OrderRequestItem>): List<Identity> {

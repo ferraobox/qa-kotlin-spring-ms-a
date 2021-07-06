@@ -8,9 +8,8 @@ import java.io.IOException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-
 @Component
-class JwtAuthenticationEntryPoint : AuthenticationEntryPoint {
+open class JwtAuthenticationEntryPoint : AuthenticationEntryPoint {
 
     companion object {
         private val log = LoggerFactory.getLogger(this::class.java)

@@ -33,8 +33,6 @@ open class OrderController(
     private val deleteOrderUseCase: DeleteOrderUseCase,
     private val payOrderUseCase: PayOrderUseCase,
     private val deliveryOrderUseCase: DeliveryOrderUseCase,
-    private val customerDomainDtoMapper: CustomerDomainDtoMapper,
-    private val orderDomainDtoMapper: OrderDomainDtoMapper,
     private val createOrderInputMapper: CreateOrderInputMapper,
 ) : OrderResource {
 

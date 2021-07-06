@@ -20,19 +20,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-open class WebSecurityConfig : WebSecurityConfigurerAdapter() {
+open class WebSecurityConfig(
     @Autowired
-    private val customUserDetailsService: CustomUserDetailsService? = null
+    private val customUserDetailsService: CustomUserDetailsService,
 
     @Autowired
-    private val unauthorizedHandler: JwtAuthenticationEntryPoint? = null
+    private val unauthorizedHandler: JwtAuthenticationEntryPoint,
 
     @Autowired
-    private val tokenProvider: JwtProvider? = null
+    private val tokenProvider: JwtProvider
+) : WebSecurityConfigurerAdapter() {
+
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Throws(Exception::class)
     override fun authenticationManagerBean(): AuthenticationManager {
@@ -46,7 +47,7 @@ open class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Bean
     open fun jwtAuthenticationFilter(): JwtAuthenticationFilter {
-        return JwtAuthenticationFilter(tokenProvider!!, customUserDetailsService!!)
+        return JwtAuthenticationFilter(tokenProvider, customUserDetailsService)
     }
 
     @Throws(Exception::class)
@@ -69,17 +70,15 @@ open class WebSecurityConfig : WebSecurityConfigurerAdapter() {
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .authorizeRequests()
-            .antMatchers("/Customer/**").permitAll()
-            .antMatchers("/Cousine/**").permitAll()
-            .antMatchers("/Store/**").permitAll()
-            .antMatchers("/Product/**").permitAll()
-            .antMatchers("/h2-console/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/Order/**").permitAll()
-            .anyRequest().authenticated()
-
+            //.authorizeRequests()
+            //.antMatchers("/Customer/**").permitAll()
+            //.antMatchers("/Cousine/**").permitAll()
+            //.antMatchers("/Store/**").permitAll()
+            //.antMatchers("/Product/**").permitAll()
+            //.antMatchers("/h2-console/**").permitAll()
+            //.antMatchers(HttpMethod.GET, "/Order/**").permitAll()
+        //.anyRequest().authenticated()
         // @formatter:on
-
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
     }

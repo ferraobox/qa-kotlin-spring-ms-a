@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.concurrent.CompletableFuture
 
 @RestController
-@RequestMapping("/Store")
+@RequestMapping("/store")
 interface StoreResource {
     @GetMapping
     fun all(): CompletableFuture<List<Any?>?>?
@@ -20,6 +20,6 @@ interface StoreResource {
     @GetMapping("/{id}")
     fun getStoreByIdentity(@PathVariable id: Long): CompletableFuture<StoreResponse?>
 
-    @GetMapping("/{id}/products")
+    @GetMapping("/{id}/product")
     fun getProductsBy(@PathVariable id: Long): CompletableFuture<List<ProductResponse?>?>
 }

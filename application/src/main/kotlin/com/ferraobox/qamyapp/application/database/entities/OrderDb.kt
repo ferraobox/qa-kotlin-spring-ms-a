@@ -21,7 +21,7 @@ class OrderDb(
     @JoinColumn(name = "store_id", nullable = false)
     var store: StoreDb,
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = [CascadeType.MERGE, CascadeType.PERSIST])
     @Default
     var orderItems: MutableSet<OrderItemDb> = HashSet(),
 

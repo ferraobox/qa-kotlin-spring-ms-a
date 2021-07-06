@@ -5,5 +5,4 @@ data class StoreResponse (
     var name: String,
     var address: String,
     var cousine: CousineResponse,
-    var products: List<ProductResponse>
 )

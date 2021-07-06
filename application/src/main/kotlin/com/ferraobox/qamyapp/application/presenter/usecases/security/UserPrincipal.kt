@@ -5,13 +5,13 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-data class UserPrincipal(
+open class UserPrincipal(
     var id: Long?,
     var name: String?,
     var email: String?,
-    private val password: String?,
+    private var password: String?,
     var address: String?,
-    private val authorities: Collection<GrantedAuthority?>?
+    private var authorities: Collection<GrantedAuthority?>?
 ): UserDetails {
 
     override fun getAuthorities(): Collection<GrantedAuthority?>{

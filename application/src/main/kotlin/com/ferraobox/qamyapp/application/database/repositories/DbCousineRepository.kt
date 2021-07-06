@@ -4,5 +4,5 @@ import com.ferraobox.qamyapp.application.database.entities.CousineDb
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface DbCousineRepository : JpaRepository<CousineDb?, Long?> {
-    fun findByNameContainingIgnoreCase(search: String): List<CousineDb?>
+    fun findByNameContainingIgnoreCase(name: String): List<CousineDb?>
 }
