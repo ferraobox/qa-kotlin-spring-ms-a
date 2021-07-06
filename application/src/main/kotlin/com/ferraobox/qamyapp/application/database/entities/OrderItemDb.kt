@@ -3,7 +3,7 @@ package com.ferraobox.qamyapp.application.database.entities
 import javax.persistence.*
 
 @Entity(name = "orderitem")
-@Table(name = "orderitem")
+@Table(name = "order_item")
 class OrderItemDb(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

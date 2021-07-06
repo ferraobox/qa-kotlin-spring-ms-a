@@ -7,7 +7,7 @@ import java.util.function.Consumer
 import javax.persistence.*
 
 @Entity(name = "order")
-@Table(name = "order")
+@Table(name = "orders")
 class OrderDb(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
