@@ -42,7 +42,6 @@ subprojects{
 	}
 
 	dependencies {
-
 		//Jetbrains Kotlin
 		implementation("org.jetbrains.kotlin:kotlin-reflect")
 		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -98,5 +97,8 @@ project(":application"){
 	tasks.bootJar{ enabled = true }
 }
 project(":dto"){
+	tasks.bootJar{ enabled = false }
+}
+project(":post-deployment"){
 	tasks.bootJar{ enabled = false }
 }
