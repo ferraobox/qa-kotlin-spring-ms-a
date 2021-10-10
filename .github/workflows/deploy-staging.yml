@@ -31,11 +31,12 @@ jobs:
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y%m%d-%H%M%S')"
+
       - name: Generate Swagger UI
-        uses: Legion2/swagger-ui-action@v1
-        with:
-        output: swagger-ui
-        spec-file: swagger-output/swagger.yaml
+          uses: Legion2/swagger-ui-action@v1
+          with:
+            output: swagger-ui
+            spec-file: swagger-output/swagger.yaml
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
