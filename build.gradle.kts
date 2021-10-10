@@ -64,6 +64,12 @@ subprojects{
 		runtimeOnly("com.h2database:h2")
 		runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 		runtimeOnly("org.postgresql:postgresql")
+
+		//SwaggerHub
+		implementation("org.springframework.boot:spring-boot-starter-web")
+		implementation("io.springfox:springfox-swagger2:2.7.0")
+		implementation("io.springfox:springfox-swagger-ui:2.7.0")
+
 	}
 
 	tasks.register("liquibase") {

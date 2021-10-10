@@ -71,6 +71,16 @@ open class WebSecurityConfig(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
+            .antMatchers("/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources",
+                "/configuration/**",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/webjars/**",
+                "/swagger-resources/configuration/ui",
+                "/swagger-ui.html",
+                "/swagger-resources/configuration/security").permitAll()
             .antMatchers("/customer/**").permitAll()
             .antMatchers("/cousine/**").permitAll()
             .antMatchers("/store/**").permitAll()
