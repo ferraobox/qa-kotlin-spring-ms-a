@@ -6,7 +6,7 @@ name: test
 # events but only for the develop branch
 on:
   pull_request:
-    branches: [ develop ]
+    branches: [ main ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
