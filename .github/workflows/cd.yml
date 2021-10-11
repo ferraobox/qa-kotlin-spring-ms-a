@@ -1,0 +1,43 @@
+# This is a basic workflow to help you get started with Actions
+
+name: ci
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+on:
+  push:
+    branches: [ main ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Deploy Swagger UI on Github Pages
+        uses: Legion2/swagger-ui-action@v1
+        with:
+          output: swagger-ui
+          spec-file: swagger-output/swagger.json
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.SWAGGER_TOKEN }}
+          publish_dir: swagger-ui
+          # - name: Slack notification
+          # uses: 8398a7/action-slack@v3
+          # with:
+        # status: ${{ job.status }}
+          # fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
+        # env:
+        # SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+        # if: always() # Pick up events even if the job fails or is canceled

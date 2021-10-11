@@ -18,6 +18,10 @@ repositories {
 
 java.sourceCompatibility = JavaVersion.VERSION_11
 
+springBoot {
+	mainClass.set("com.ferraobox.qamyapp.application.QamyappApplicationKt")
+}
+
 allprojects{
 	group = "com.ferraobox"
 	version = "0.0.1-SNAPSHOT"
@@ -66,10 +70,11 @@ subprojects{
 		runtimeOnly("org.postgresql:postgresql")
 
 		//SwaggerHub
-		implementation("org.springframework.boot:spring-boot-starter-web")
-		implementation("io.springfox:springfox-swagger2:2.7.0")
-		implementation("io.springfox:springfox-swagger-ui:2.7.0")
-
+		implementation("org.springdoc:springdoc-openapi-webmvc-core:1.5.0")
+		implementation("org.springdoc:springdoc-openapi-core:1.1.49")
+		implementation("org.springdoc:springdoc-openapi-ui:1.5.0")
+		implementation("org.springdoc:springdoc-openapi-security:1.5.0")
+		implementation("org.springdoc:springdoc-openapi-kotlin:1.5.0")
 	}
 
 	tasks.register("liquibase") {
