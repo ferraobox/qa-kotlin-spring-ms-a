@@ -14,5 +14,5 @@ dependencies {
 }
 
 application {
-    mainClass.set("com.ferraobox.qamyapp.application.QamyappApplication")
+    mainClass.set("com.ferraobox.qamyapp.application.QamyappApplicationKt")
 }
