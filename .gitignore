@@ -9,6 +9,10 @@ application/build
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Swagger ###
+!swagger-output
+!swagger.json
+
 ### STS ###
 .apt_generated
 .classpath
