@@ -33,17 +33,22 @@ jobs:
         run: echo "::set-output name=date::$(date +'%Y%m%d-%H%M%S')"
       - name: Run application and generate swagger file
         run: ./gradlew run & ./wait-for-it.sh 0.0.0.0:8080 --timeout=50 -- echo 'Application is up' &&  curl -o ./swagger-output/swagger.json http://localhost:8080/v3/api-docs && ./gradlew -stop
+      - name: Validate SWAGGER
+        uses: docker://orrosenblatt/validate-json-action:latest
+        env:
+          INPUT_SCHEMA:  /swagger-output/swagger.json
+          INPUT_JSONS: /swagger-output/swagger.json
       - name: Commit Swagger
         uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
         with:
           add: 'swagger-output/swagger.json'
           message: 'chore(docu): update swagger file'
           push: true
-          # - name: Slack notification
-          # uses: 8398a7/action-slack@v3
-          # with:
-        # status: ${{ job.status }}
-          # fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
-        # env:
-        # SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
-        # if: always() # Pick up events even if the job fails or is canceled
+    # - name: Slack notification
+    #   uses: 8398a7/action-slack@v3
+    #   with:
+    #     status: ${{ job.status }}
+    # fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
+    #   env:
+    #   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+    #   if: always() # Pick up events even if the job fails or is canceled
