@@ -33,6 +33,10 @@ jobs:
         run: echo "::set-output name=date::$(date +'%Y%m%d-%H%M%S')"
       - name: Run application and generate swagger file
         run: ./gradlew run & ./wait-for-it.sh 0.0.0.0:8080 --timeout=50 -- echo 'Application is up' &&  curl -o ./swagger-output/swagger.json http://localhost:8080/v3/api-docs && ./gradlew -stop
+      - name: Validate SWAGGER
+        uses: docker://orrosenblatt/validate-json-action:latest
+        env:
+          INPUT_SCHEMA:  /swagger-output/swagger.json
       - name: Commit Swagger
         uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
         with:
