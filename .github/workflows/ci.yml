@@ -64,8 +64,7 @@ jobs:
       - run: npm i -g @stoplight/cli
       - name: Api-Version
         id: api
-        run: stoplight push glovo-personal/open-api_definition/ -f ./swagger-output/swagger.json
-        --directory ./ --url https://ferraobox.stoplight.io --ci-token ${{ secrets.SWAGGER_TOKEN }} --branch main
+        run: stoplight push --directory ./ --url https://ferraobox.stoplight.io --ci-token ${{ secrets.SWAGGER_TOKEN }} --branch main
         continue-on-error: true
       - name: Echo
         run: echo "${{ steps.create }}"
